@@ -9,9 +9,17 @@ abstract: >-
   and the frozen result files that are the provenance of every number reported in the article.
 type: software
 version: "1.0.0"
+doi: "10.5281/zenodo.22249253"   # concept DOI — always resolves to the latest version
 repository-code: "https://github.com/dhjung-blip/science-culture"
 date-released: "2026-09-02"
 license: MIT
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.22249253"
+    description: Concept DOI for all versions of this deposit
+  - type: doi
+    value: "10.5281/zenodo.22249254"
+    description: DOI for version 1.0.0
 keywords:
   - science culture
   - cognitive human capital

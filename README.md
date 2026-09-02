@@ -11,7 +11,7 @@ that must be downloaded first, with one documented exception noted below.
 
 | | |
 |---|---|
-| DOI | Minted by Zenodo when the v1.0.0 release is published. The concept DOI (stable across versions) is the one to cite; it is recorded here and in `CITATION.cff` once issued, and in the article's Data availability statement |
+| DOI | [`10.5281/zenodo.22249253`](https://doi.org/10.5281/zenodo.22249253) — concept DOI, cite this one; it resolves to the latest version. Version 1.0.0 alone is [`10.5281/zenodo.22249254`](https://doi.org/10.5281/zenodo.22249254) |
 | Runtime | Python 3.12 (pinned via `uv.lock`; ≥ 3.10 works) |
 | Core libraries | xgboost, scikit-learn, shap, statsmodels, pandas, numpy |
 | Seed | 42 throughout; the golden test verifies bit-identical output across two runs |
@@ -116,4 +116,4 @@ the WVS and point `.env` at the microdata; every other column rebuilds without r
 
 ## 6. Citation
 
-If you use this package, please cite the manuscript and this deposit. See `CITATION.cff`.
+If you use this package, please cite the manuscript and this deposit. The deposit's concept DOI is [`10.5281/zenodo.22249253`](https://doi.org/10.5281/zenodo.22249253), which always resolves to the latest version; cite it in preference to a version-specific DOI. Machine-readable metadata, including both DOIs, is in `CITATION.cff`.
