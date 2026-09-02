@@ -44,6 +44,8 @@ that must be downloaded first, with one documented exception noted below.
 │   ├── preprocessor.py           missingness, lags, composites (fitted inside CV folds)
 │   ├── model_trainer.py          XGBoost with country-level GroupKFold
 │   ├── shap_analyzer.py          global, category, and axis SHAP decomposition
+│   ├── scenario_simulator.py     counterfactual scenario matrix — methodology
+│   │                             demonstration, not a policy prescription
 │   ├── visualizer.py             figure generation
 │   ├── config.py                 country set, feature groups, category map
 │   └── tests/                    architecture, config, golden, and containment tests

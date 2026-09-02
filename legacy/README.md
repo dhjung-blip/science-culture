@@ -9,8 +9,7 @@ replicates from it. If you are here to reproduce the paper, go back to `REPRODUC
 | Path | What it is | Why it is not in the paper |
 |---|---|---|
 | `replicate_paper.py` | Entry point for an earlier 20-country specification with 17 variables and five policy scenarios | Superseded by the 44-country specification. Its country set includes two economies absent from the analysis panel, and its reported R² (0.51) and category shares differ from every published figure |
-| `scenario_simulator.py` | Category-level counterfactual simulation ("what if science-culture inputs rose by 20%") | Excluded on identification grounds. See Section 5.4, item 11: a cross-sectional model learns differences between countries and cannot be used to extrapolate the effect of an intervention within one country |
-| `single_country_scenario.py` | Local SHAP decomposition for a single country plus policy what-if | Same reason |
+| `single_country_scenario.py` | Local SHAP decomposition for a single country plus policy what-if | Excluded on identification grounds. See Section 5.4, item 11: a cross-sectional model learns differences between countries and cannot be used to extrapolate the effect of an intervention within one country. It imports `scenario_simulator` from `code/`, which stays there as a pipeline stage; no number it produces is reported |
 | `dashboard/` | React and Vite interface for browsing results | Presentation only; produces no estimate |
 | `data_v1/` | The two canonical CSVs **before** the release-time column removal | `replicate_paper.py` and `dashboard/scripts/build_data.py` reference the five removed columns and will not run against the released files. These copies keep the legacy path executable without putting undocumented columns into the released data |
 
