@@ -11,7 +11,7 @@ that must be downloaded first, with one documented exception noted below.
 
 | | |
 |---|---|
-| DOI | `10.5281/zenodo.XXXXXXX` — replace on release; the same placeholder appears in `CITATION.cff` and in the article's Data availability statement |
+| DOI | Minted by Zenodo when the v1.0.0 release is published. The concept DOI (stable across versions) is the one to cite; it is recorded here and in `CITATION.cff` once issued, and in the article's Data availability statement |
 | Runtime | Python 3.12 (pinned via `uv.lock`; ≥ 3.10 works) |
 | Core libraries | xgboost, scikit-learn, shap, statsmodels, pandas, numpy |
 | Seed | 42 throughout; the golden test verifies bit-identical output across two runs |

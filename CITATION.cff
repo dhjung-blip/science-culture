@@ -9,9 +9,8 @@ abstract: >-
   and the frozen result files that are the provenance of every number reported in the article.
 type: software
 version: "1.0.0"
-doi: "10.5281/zenodo.XXXXXXX"   # replace with the DOI issued by Zenodo on release
-repository-code: "https://github.com/REPLACE-ME/science-culture-audit"
-date-released: "2026-08-30"
+repository-code: "https://github.com/dhjung-blip/science-culture"
+date-released: "2026-09-02"
 license: MIT
 keywords:
   - science culture
