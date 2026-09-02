@@ -1,0 +1,65 @@
+[project]
+name = "science-culture-xai"
+version = "1.0.0"
+description = "인지 인적자본 × 국가혁신 산출 — 측정 감사 분석 파이프라인 (XGBoost + SHAP)"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+
+# 런타임 의존성 — requirements.txt 를 그대로 미러링한다.
+dependencies = [
+    "xgboost>=2.0",
+    "lightgbm>=4.0",
+    "shap>=0.44",
+    "pandas>=2.0",
+    "numpy>=1.26",
+    "scikit-learn>=1.4",
+    "matplotlib>=3.8",
+    "seaborn>=0.13",
+    "requests>=2.31",
+    "optuna>=3.5",
+    "python-dotenv>=1.0",
+    "statsmodels>=0.14",
+]
+
+# 라이브러리가 아니라 애플리케이션이며, 분석 코드는 code/ 의 flat 모듈이다.
+# uv 가 프로젝트 자체를 패키지로 빌드·설치하지 않도록 한다.
+[tool.uv]
+package = false
+
+[dependency-groups]
+dev = [
+    "ruff>=0.6",
+    "mypy>=1.10",
+    "pytest>=8.0",
+]
+
+# ──────────────────────────────────────────────────────────────────────────
+# 테스트 — code/ 를 소스 루트로 둔다.
+#   구조 테스트 : pytest code/tests            (가볍고 빠름)
+#   결정성 회귀 : pytest code/tests -m golden  (ML 스택 필요, opt-in)
+# ──────────────────────────────────────────────────────────────────────────
+[tool.pytest.ini_options]
+testpaths = ["code/tests"]
+pythonpath = ["code"]
+addopts = '-q -m "not golden"'
+markers = [
+    "golden: 시드 고정 결정적 회귀 테스트 (opt-in: pytest -m golden)",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+ignore = [
+    "E501",   # line-too-long: 긴 한국어 주석·정렬 코드 특성상 비강제
+    "E402",   # module-import-not-at-top: matplotlib.use() 전 import 등 의도적 패턴
+]
+
+[tool.mypy]
+python_version = "3.10"
+mypy_path = "code"
+ignore_missing_imports = true
+warn_unused_ignores = true

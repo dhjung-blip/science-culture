@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+message: "If you use this replication package, please cite both the article and this deposit."
+title: "Replication package: Science Culture and National Innovation — The ECAB Framework and a De-Circularized Measurement Audit of Cognitive Human Capital"
+abstract: >-
+  Replication code and frozen data for a de-circularized measurement audit of the association
+  between PISA-based cognitive human capital and national innovation outputs across 44
+  countries and economies, 2012-2023. Includes the analysis pipeline, the frozen
+  pre-interpolation and analysis datasets, all robustness, placebo and sensitivity scripts,
+  and the frozen result files that are the provenance of every number reported in the article.
+type: software
+version: "1.0.0"
+doi: "10.5281/zenodo.XXXXXXX"   # replace with the DOI issued by Zenodo on release
+repository-code: "https://github.com/REPLACE-ME/science-culture-audit"
+date-released: "2026-08-30"
+license: MIT
+keywords:
+  - science culture
+  - cognitive human capital
+  - national innovation
+  - composite indices
+  - criterion contamination
+  - measurement audit
+  - reproducibility
+authors:
+  - family-names: Jeng
+    given-names: Dohun
+  - family-names: Yeom
+    given-names: Min Sun
+  - family-names: Shin
+    given-names: Junseok
+  - family-names: Lee
+    given-names: Muhyeon
+  - family-names: Shin
+    given-names: Taeksoo
+  - family-names: Kim
+    given-names: Sungyong
+  - family-names: Kwon
+    given-names: Mija

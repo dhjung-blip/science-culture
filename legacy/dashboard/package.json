@@ -1,0 +1,10 @@
+{
+  "name": "science-culture-dashboard",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "과학문화-국가혁신 XAI 분석 결과 발표용 대시보드",
+  "scripts": { "dev": "vite", "build": "vite build", "preview": "vite preview" },
+  "dependencies": { "react": "^18.3.1", "react-dom": "^18.3.1" },
+  "devDependencies": { "@vitejs/plugin-react": "^4.3.1", "vite": "^5.4.0" }
+}

@@ -1,0 +1,12 @@
+xgboost>=2.0
+lightgbm>=4.0
+shap>=0.44
+pandas>=2.0
+numpy>=1.26
+scikit-learn>=1.4
+matplotlib>=3.8
+seaborn>=0.13
+requests>=2.31
+optuna>=3.5         # 하이퍼파라미터 최적화 (선택)
+python-dotenv>=1.0  # .env 로딩 (실데이터 통합)
+statsmodels>=0.14   # 통계 추론·패널 고정효과 회귀 (선형 inference 모델)

@@ -1,0 +1,8 @@
+outcome,source_url_or_source_name,download_date,raw_file,sha1,coverage_note
+pct_applications_origin,OECD DSD_PATENTS@DF_PATENTS_WIPO(9P50_1/AP/APPLICANT),2026-06-30,data/external/pct_applications.csv,ec782f97132087b0a45c791b3710c716b78abc64,"44/44 countries, 2012-2023, n_obs=528"
+openalex_top10_cited,OpenAlex API group_by country; article|review; percentile >= 90,2026-06-30,data/external/openalex_top_cited.csv,c36abec1a6032bfa6a76df854c19fd614af18589,"44/44 countries, 2012-2023, n_obs=528"
+openalex_total_publications,OpenAlex API group_by country; article|review (total),2026-06-30,data/external/openalex_top_cited.csv,c36abec1a6032bfa6a76df854c19fd614af18589,"44/44 countries, 2012-2023, n_obs=528"
+canonical_raw_dataset,Merged pre-interpolation source file (see DATA_DICTIONARY.md),2026-08-30,analysis/canonical/raw_dataset.csv,bf00078a3260208fb1896e1433e99449bc11e38c,"44 countries, 2012-2023, n_obs=528; five legacy columns removed at release"
+canonical_processed_dataset,"Analysis file after within-country interpolation, lags and composites",2026-08-30,analysis/canonical/processed_dataset.csv,b59486517b790aff2b24dd61e17824252eeab6d4,"44 countries, 2012-2023, n_obs=528; five legacy columns removed at release"
+tfp_pwt110,"Penn World Table 11.0 (ctfp, rtfpna)",2026-06-30,analysis/canonical/external_tfp_pwt110.csv,72137eb1876c47beb2a6359c44f78f17baff0352,"44 countries, 2012-2023, n_obs=528"
+triadic_patent_families,OECD SDMX triadic patent families (INVENTOR/PRIORITY/Total),2026-06-30,analysis/canonical/external_triadic_oecd.csv,ded9129c291e8e8815c3b460572a1270c1d40eb1,"44 countries, 2012-2022"

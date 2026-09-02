@@ -1,0 +1,850 @@
+{
+  "_meta": {
+    "purpose": "식별전략·외부 준거 분석 결과 저장소. 주 분석 결과(results_main.json)을 절대 덮어쓰지 않으며, 원고(원고)의 신규 수치는 여기와 주 분석 결과만 인용한다.",
+    "generated": "2026-06-30",
+    "relation_to_main_analysis": "주 분석 결과은 보존(read-only). 본 파일은 동결 데이터(analysis/canonical/) 위에서 추가로 실행한 시간선행·시차매개·외부산출 분석만 담는다.",
+    "data_snapshot": {
+      "canonical_snapshot_hash": "cf2344519aad771a",
+      "_note": "아래 input_hash 는 본 분석이 읽은 동결 파일의 sha1(앞16자)로, 주 분석 결과 해시(cf2344519aad771a)와 산출 방식이 다를 뿐 동일 동결 파일을 가리킨다(WB live drift 차단).",
+      "processed_dataset.csv_sha1": "735679f82b4118ce",
+      "raw_dataset.csv_sha1": "657957e5fbdede85",
+      "external_triadic_oecd.csv_sha1": "ded9129c291e8e88"
+    },
+    "n_countries": 44,
+    "n_obs_nominal": 528,
+    "seed": 42,
+    "reproduce": "cd <repo-root>; uv run python analysis/{pisa_cohort_lag,future_pisa_placebo,placebo_robustness,lagged_mediation,external_outcomes_template,build_frozen_direct_output_headline,consistency_check_v3}.py. 로그: analysis/.",
+    "_headline_interpretation": "의 핵심 신규 결과는 forward cohort-lag(시간 선행 방향)와 future-PISA placebo(역방향)가 거의 동일하게 유의하다는 점이다. 이는 PISA–혁신산출 연관이 시간 선행 신호라기보다 국가 장기특성(between 분산 95%) 로딩임을 강하게 시사하며, 의 '식별은 사실상 횡단(국가 간)' 진술과 정합한다. 따라서 는 '시간 선행성을 갖춘 연관'을 주장하지 않고 '강건한 between-country 조건부 연관'으로 한정한다.",
+    "frozen_direct_output_headline_note": "frozen_direct_output_headline 섹션은 build_frozen_direct_output_headline.py 가 동결 주 분석 결과에서 재정렬·재검증해 자급화(스냅샷 분기 대응). future_pisa_placebo.sample_matched 는 placebo_robustness.py 산출."
+  },
+  "pisa_cohort_lag": {
+    "_source": "analysis/pisa_cohort_lag.py",
+    "_design": "Output_{i,t+h} ~ PISA_{i,t} + rd_gdp_pct + gdp_per_capita ; 회귀자는 raw 실측 PISA 앵커(2012/2015/2018/2022)만 사용(보간 인공물 제거); pooled OLS·국가 클러스터 SE; confounder-only(연구원밀도=매개변수 제외).",
+    "_note": "표준화 β(beta_std). beta_rawunit 은 PISA 1점당 outcome(로그/지수) 변화. 표본이 1~2 PISA 코호트로 줄어 사실상 between-country 추정 — FE 불능/불안정. 유의해도 인과 아님. h=12 는 동결 패널 12년 한계(2012+12=2024>2023)로 미실행.",
+    "_input_hash": {
+      "raw_dataset.csv": "657957e5fbdede85",
+      "processed_dataset.csv": "735679f82b4118ce",
+      "external_triadic_oecd.csv": "ded9129c291e8e88"
+    },
+    "sci_literacy": {
+      "h6": {
+        "_cohorts": [
+          2012,
+          2015
+        ],
+        "_outcome_years": [
+          2018,
+          2021
+        ],
+        "_fe": "불안정(국가당 ~2관측, within df 1)",
+        "triadic_pc_log": {
+          "beta_std": 0.182,
+          "se": 0.0548,
+          "p": 0.0009,
+          "n_obs": 79,
+          "n_countries": 42,
+          "coverage": "삼극 외부준거 1순위; 42/44국"
+        },
+        "patents_per_m_log": {
+          "beta_std": 0.2849,
+          "se": 0.1203,
+          "p": 0.0179,
+          "n_obs": 79,
+          "n_countries": 42,
+          "coverage": "비합성 직접산출"
+        },
+        "articles_per_m_log": {
+          "beta_std": 0.5452,
+          "se": 0.1008,
+          "p": 0.0,
+          "n_obs": 78,
+          "n_countries": 41,
+          "coverage": "비합성 직접산출"
+        },
+        "innovation_score": {
+          "beta_std": 0.3401,
+          "se": 0.0548,
+          "p": 0.0,
+          "n_obs": 79,
+          "n_countries": 42,
+          "coverage": "GII 종합 benchmark(순환 포함)"
+        },
+        "ctfp": {
+          "beta_std": 0.1838,
+          "se": 0.1325,
+          "p": 0.1653,
+          "n_obs": 79,
+          "n_countries": 42,
+          "coverage": "PWT TFP 완전독립 외부준거 — n.s.(TFP null 과 정합)"
+        }
+      },
+      "h9": {
+        "_cohorts": [
+          2012
+        ],
+        "_outcome_years": [
+          2021
+        ],
+        "_fe": "불능(단일 코호트·국가당 1관측)",
+        "triadic_pc_log": {
+          "beta_std": 0.1624,
+          "se": 0.0689,
+          "p": 0.0185,
+          "n_obs": 38,
+          "n_countries": 38
+        },
+        "patents_per_m_log": {
+          "beta_std": 0.2601,
+          "se": 0.1293,
+          "p": 0.0442,
+          "n_obs": 38,
+          "n_countries": 38
+        },
+        "articles_per_m_log": {
+          "beta_std": 0.5437,
+          "se": 0.1225,
+          "p": 0.0,
+          "n_obs": 38,
+          "n_countries": 38
+        },
+        "innovation_score": {
+          "beta_std": 0.2625,
+          "se": 0.0715,
+          "p": 0.0002,
+          "n_obs": 38,
+          "n_countries": 38
+        },
+        "ctfp": {
+          "beta_std": 0.2192,
+          "se": 0.146,
+          "p": 0.1332,
+          "n_obs": 38,
+          "n_countries": 38
+        }
+      },
+      "h12": {
+        "feasible": false,
+        "_note": "2012+12=2024 > 동결패널 끝 2023 → 미실행(데이터 한계)."
+      }
+    },
+    "pisa_math": {
+      "h6": {
+        "_cohorts": [
+          2012,
+          2015
+        ],
+        "_outcome_years": [
+          2018,
+          2021
+        ],
+        "triadic_pc_log": {
+          "beta_std": 0.1822,
+          "p": 0.0009,
+          "n_obs": 80,
+          "n_countries": 42
+        },
+        "patents_per_m_log": {
+          "beta_std": 0.3071,
+          "p": 0.0068,
+          "n_obs": 80,
+          "n_countries": 42
+        },
+        "articles_per_m_log": {
+          "beta_std": 0.595,
+          "p": 0.0,
+          "n_obs": 79,
+          "n_countries": 41
+        },
+        "innovation_score": {
+          "beta_std": 0.3206,
+          "p": 0.0,
+          "n_obs": 80,
+          "n_countries": 42
+        },
+        "ctfp": {
+          "beta_std": 0.1394,
+          "p": 0.3449,
+          "n_obs": 80,
+          "n_countries": 42
+        }
+      },
+      "h9": {
+        "_cohorts": [
+          2012
+        ],
+        "_outcome_years": [
+          2021
+        ],
+        "triadic_pc_log": {
+          "beta_std": 0.2106,
+          "p": 0.0013,
+          "n_obs": 38,
+          "n_countries": 38
+        },
+        "patents_per_m_log": {
+          "beta_std": 0.3031,
+          "p": 0.0153,
+          "n_obs": 38,
+          "n_countries": 38
+        },
+        "articles_per_m_log": {
+          "beta_std": 0.5665,
+          "p": 0.0,
+          "n_obs": 38,
+          "n_countries": 38
+        },
+        "innovation_score": {
+          "beta_std": 0.2792,
+          "p": 0.0002,
+          "n_obs": 38,
+          "n_countries": 38
+        },
+        "ctfp": {
+          "beta_std": 0.1852,
+          "p": 0.2703,
+          "n_obs": 38,
+          "n_countries": 38
+        }
+      }
+    }
+  },
+  "future_pisa_placebo": {
+    "_source": "analysis/future_pisa_placebo.py",
+    "_design": "PastOutput_{i,t-k} ~ FuturePISA_{i,t} + rd_gdp_pct + gdp_per_capita ; raw PISA 앵커; pooled·국가 클러스터 SE.",
+    "_note": "반증검정. 미래 PISA 가 과거 산출을 forward 와 비슷하게 강하게 예측하면 시간선행 주장 붕괴(국가 장기특성 로딩). 표준화 β.",
+    "_input_hash": {
+      "raw_dataset.csv": "657957e5fbdede85",
+      "processed_dataset.csv": "735679f82b4118ce"
+    },
+    "sci_literacy": {
+      "k3": {
+        "_cohorts": [
+          2015,
+          2018,
+          2022
+        ],
+        "_past_years": [
+          2012,
+          2015,
+          2019
+        ],
+        "patents_per_m_log": {
+          "beta_std": 0.403,
+          "p": 0.002,
+          "n_obs": 117,
+          "n_countries": 43
+        },
+        "articles_per_m_log": {
+          "beta_std": 0.555,
+          "p": 0.0,
+          "n_obs": 122,
+          "n_countries": 43
+        },
+        "triadic_pc_log": {
+          "beta_std": 0.183,
+          "p": 0.003,
+          "n_obs": 124,
+          "n_countries": 44
+        },
+        "innovation_score": {
+          "beta_std": 0.394,
+          "p": 0.0,
+          "n_obs": 124,
+          "n_countries": 44
+        }
+      },
+      "k6": {
+        "_cohorts": [
+          2018,
+          2022
+        ],
+        "_past_years": [
+          2012,
+          2016
+        ],
+        "patents_per_m_log": {
+          "beta_std": 0.436,
+          "p": 0.001,
+          "n_obs": 79,
+          "n_countries": 43
+        },
+        "articles_per_m_log": {
+          "beta_std": 0.55,
+          "p": 0.0,
+          "n_obs": 82,
+          "n_countries": 43
+        },
+        "triadic_pc_log": {
+          "beta_std": 0.208,
+          "p": 0.011,
+          "n_obs": 83,
+          "n_countries": 44
+        },
+        "innovation_score": {
+          "beta_std": 0.371,
+          "p": 0.0,
+          "n_obs": 83,
+          "n_countries": 44
+        }
+      },
+      "k9": {
+        "_cohorts": [
+          2022
+        ],
+        "_past_years": [
+          2013
+        ],
+        "patents_per_m_log": {
+          "beta_std": 0.477,
+          "p": 0.001,
+          "n_obs": 40,
+          "n_countries": 40
+        },
+        "articles_per_m_log": {
+          "beta_std": 0.537,
+          "p": 0.0,
+          "n_obs": 41,
+          "n_countries": 41
+        },
+        "triadic_pc_log": {
+          "beta_std": 0.225,
+          "p": 0.013,
+          "n_obs": 42,
+          "n_countries": 42
+        },
+        "innovation_score": {
+          "beta_std": 0.287,
+          "p": 0.0,
+          "n_obs": 42,
+          "n_countries": 42
+        }
+      }
+    },
+    "_verdict": "PLACEBO FAILS (시간선행 미성립). 모든 호라이즌에서 future-PISA→past-output 이 유의하며, 같은 호라이즌의 forward cohort-lag 와 같거나 더 크다(예: sci_literacy→patents forward h6 +0.285 vs placebo k6 +0.436; →articles forward h6 +0.545 vs placebo k6 +0.550). 결론: 연관은 시간 선행이 아니라 국가 장기특성(between) 로딩. 는 '시간선행성을 갖춘 연관' 주장을 철회하고 between-country 조건부 연관으로 한정한다.",
+    "sample_matched": {
+      "_source": "analysis/placebo_robustness.py",
+      "_design": "동일 달력창 (a,b)·동일 국가집합에서 forward(PISA_a→out_b) vs placebo(PISA_b→out_a). control-timing 3사양: outcome-year / PISA-year / country-mean. 표준화 β·국가 클러스터 SE.",
+      "_input_hash": {
+        "raw_dataset.csv": "657957e5fbdede85",
+        "processed_dataset.csv": "735679f82b4118ce"
+      },
+      "windows": {
+        "2012_2018": {
+          "gap": 6,
+          "outcomes": {
+            "patents_per_m_log": {
+              "n_obs": 35,
+              "n_countries": 35,
+              "specs": {
+                "outcome_year": {
+                  "forward_beta": 0.2926,
+                  "forward_p": 0.0423,
+                  "placebo_beta": 0.3262,
+                  "placebo_p": 0.0582,
+                  "placebo_ge_forward": true
+                },
+                "pisa_year": {
+                  "forward_beta": 0.2748,
+                  "forward_p": 0.0563,
+                  "placebo_beta": 0.3401,
+                  "placebo_p": 0.05,
+                  "placebo_ge_forward": true
+                },
+                "country_mean": {
+                  "forward_beta": 0.2987,
+                  "forward_p": 0.0441,
+                  "placebo_beta": 0.3472,
+                  "placebo_p": 0.0496,
+                  "placebo_ge_forward": true
+                }
+              }
+            },
+            "articles_per_m_log": {
+              "n_obs": 38,
+              "n_countries": 38,
+              "specs": {
+                "outcome_year": {
+                  "forward_beta": 0.5197,
+                  "forward_p": 0.0,
+                  "placebo_beta": 0.5454,
+                  "placebo_p": 0.0051,
+                  "placebo_ge_forward": true
+                },
+                "pisa_year": {
+                  "forward_beta": 0.5247,
+                  "forward_p": 0.0,
+                  "placebo_beta": 0.5439,
+                  "placebo_p": 0.0036,
+                  "placebo_ge_forward": true
+                },
+                "country_mean": {
+                  "forward_beta": 0.5188,
+                  "forward_p": 0.0,
+                  "placebo_beta": 0.5418,
+                  "placebo_p": 0.0036,
+                  "placebo_ge_forward": true
+                }
+              }
+            }
+          }
+        },
+        "2015_2022": {
+          "gap": 7,
+          "outcomes": {
+            "patents_per_m_log": {
+              "n_obs": 0,
+              "n_countries": 0,
+              "_skipped": true,
+              "_note": "창 2015-2022: patents_per_m_log 산출 결측으로 매칭표본 부족(예: 2022 특허·논문 WB 보고 지연)."
+            },
+            "articles_per_m_log": {
+              "n_obs": 39,
+              "n_countries": 39,
+              "specs": {
+                "outcome_year": {
+                  "forward_beta": 0.5679,
+                  "forward_p": 0.0,
+                  "placebo_beta": 0.5117,
+                  "placebo_p": 0.0006,
+                  "placebo_ge_forward": false
+                },
+                "pisa_year": {
+                  "forward_beta": 0.5701,
+                  "forward_p": 0.0,
+                  "placebo_beta": 0.5215,
+                  "placebo_p": 0.0007,
+                  "placebo_ge_forward": false
+                },
+                "country_mean": {
+                  "forward_beta": 0.5536,
+                  "forward_p": 0.0,
+                  "placebo_beta": 0.5049,
+                  "placebo_p": 0.0008,
+                  "placebo_ge_forward": false
+                }
+              }
+            }
+          }
+        }
+      },
+      "_verdict": "동일 표본·동일 창에서 forward 와 placebo β 가 거의 같다(|Δβ|≤0.06; 창 2012-2018 은 placebo 가 미세히 더 크고, 2015-2022 논문은 forward 가 미세히 더 크다 — 체계적 우열 없음). control-timing 3사양 모두에서 동일. 즉 forward 의 '예측력'은 표본 불일치 인공물로 설명되지 않으며, 본 설계에서는 시간선행 우위를 식별하지 못한다 — 연관은 between-country 장기특성 로딩으로 강하게 시사된다(인과 아님)."
+    }
+  },
+  "lagged_mediation": {
+    "_source": "analysis/lagged_mediation.py",
+    "_design": "PISA_2012 -> researchers_2018 -> output_2021 ; 완전표준화 ; 국가 부트스트랩 2000회 ; confounder-only 통제(rd_gdp_pct·gdp_per_capita).",
+    "_note": "탐색적. t+12 산출(2024)은 동결패널 밖이라 t+9(2021) 단일 코호트(국가당 1관측)만 가능 → 순차적 무시가능성·시간선행이 매개경로 전체에 대해 미검증. CI 넓거나 0 포함이면 불안정으로 보고.",
+    "_input_hash": {
+      "raw_dataset.csv": "657957e5fbdede85",
+      "processed_dataset.csv": "735679f82b4118ce"
+    },
+    "patents_per_m_log": {
+      "a_path": 0.2614,
+      "b_path": -0.2342,
+      "total": 0.2017,
+      "direct": 0.2629,
+      "indirect": -0.0612,
+      "prop_mediated_pct": -30.4,
+      "prop_ci_pct": [
+        -288.7,
+        247.3
+      ],
+      "indirect_ci": [
+        -0.1818,
+        0.0605
+      ],
+      "ci_excludes_zero": false,
+      "n_countries": 36,
+      "coverage": "단일 코호트 36국",
+      "_note": "불안정(CI 0 포함·부호 음수) — 동결 횡단 특허매개 −13.9% 불안정과 정합."
+    },
+    "articles_per_m_log": {
+      "a_path": 0.2614,
+      "b_path": 0.6073,
+      "total": 0.5623,
+      "direct": 0.4036,
+      "indirect": 0.1588,
+      "prop_mediated_pct": 28.2,
+      "prop_ci_pct": [
+        7.8,
+        63.2
+      ],
+      "indirect_ci": [
+        0.0437,
+        0.3028
+      ],
+      "ci_excludes_zero": true,
+      "n_countries": 36,
+      "coverage": "단일 코호트 36국",
+      "_note": "약하게 유의 — 동결 횡단 논문매개 +21.0%[5.9,44.4] 와 수렴(시차 부여 후에도 동일 패턴)."
+    },
+    "_verdict": "시차 매개는 횡단 매개의 질적 패턴(논문 약지지·특허 불안정)을 재현하나 표본 한계로 탐색적. 보조증거로만 위치."
+  },
+  "external_outcomes": {
+    "_source": "analysis/external_outcomes_template.py",
+    "_design": "data/external/*.csv 자동감지 ; confounder-only pooled(국가 클러스터 SE) + cohort-lag h6 ; PISA=sci_literacy ; 변환 raw/per_million/per_researcher/log1p_raw/log1p_per_million.",
+    "_input_hash": {
+      "processed_dataset.csv": "735679f82b4118ce",
+      "triadic_patents.csv": "4e792ceb937bde46"
+    },
+    "triadic_patents": {
+      "status": "ANALYZED",
+      "label": "OECD 삼극특허 패밀리",
+      "n_nonnull": 484,
+      "n_countries": 44,
+      "cross_log1p_per_million": {
+        "beta_std": 0.1888,
+        "se": 0.0518,
+        "p": 0.0003,
+        "n_obs": 484,
+        "_note": "external_reference_tfp 삼극 횡단 β=+0.189 와 동일(독립 재현)."
+      },
+      "cohort_lag_h6_log1p_per_million": {
+        "beta_std": 0.182,
+        "p": 0.0009,
+        "n_obs": 79,
+        "n_countries": 42
+      },
+      "transform_sensitivity": {
+        "cross_raw_p": 0.4495,
+        "cross_per_million_p": 0.8163,
+        "cross_per_researcher_p": 0.6821,
+        "cross_log1p_raw_p": 0.0959,
+        "cross_log1p_per_million_p": 0.0003,
+        "_note": "연관은 log1p_per_million(=주 분석 결과 변환)에서만 유의. raw·per_million·per_researcher 는 n.s. → 외부준거 결과의 강건성은 변환 선택에 조건부임을 정직하게 명시."
+      },
+      "transform_sensitivity_full": {
+        "_note": "삼극 5변환 횡단 β·p(외부준거 변환 민감성; external_outcomes_template.py 본 라운드 재실행). log1p_per_million 만 유의(+0.189***), 나머지 4변환 n.s. → headline 은 log per-m 한정.",
+        "_source": "analysis/external_outcomes_template.py",
+        "n_obs": 484,
+        "n_countries": 44,
+        "raw": {
+          "cross_beta": 0.122,
+          "cross_p": 0.45
+        },
+        "per_million": {
+          "cross_beta": -0.026,
+          "cross_p": 0.816
+        },
+        "per_researcher": {
+          "cross_beta": -0.047,
+          "cross_p": 0.682
+        },
+        "log1p_raw": {
+          "cross_beta": 0.208,
+          "cross_p": 0.096
+        },
+        "log1p_per_million": {
+          "cross_beta": 0.189,
+          "cross_p": 0.0
+        }
+      }
+    },
+    "pct_applications": {
+      "status": "TODO",
+      "label": "WIPO PCT 출원(origin)",
+      "expected_path": "data/external/pct_applications.csv",
+      "_note": "데이터 미제공. 후보: WIPO IP Statistics Data Center(PCT by origin). 도착 시 동일 스크립트 자동 분석."
+    },
+    "openalex_top_cited": {
+      "status": "TODO",
+      "label": "OpenAlex 상위10% 피인용 논문(분야정규화)",
+      "expected_path": "data/external/openalex_top_cited.csv",
+      "_note": "데이터 미제공. 후보: OpenAlex snapshot/API 또는 Scopus/SciVal. 분야·연도 정규화 필수."
+    }
+  },
+  "_did_event_study": {
+    "status": "NOT_IMPLEMENTED — 후속 준실험 설계안으로만 남김",
+    "_note": "DiD/event-study 는 처치 정의·처치시점·pre-trend outcome 이 명확할 때만 구현한다는 제약을 따른다. 본 데이터(PISA 는 연속 점수·명확한 처치시점 없음, 12년 패널·44 고소득국)는 깨끗한 처치를 정의할 수 없어 미구현. 구현 시 일반 TWFE 단독을 피하고 Callaway–Sant'Anna / Sun–Abraham / stacked DiD 를 쓸 것. 약식별 IV(GDP·언어권·종교권·문화권·과거교육)는 배제제약 방어 불가로 금지."
+  },
+  "frozen_direct_output_headline": {
+    "_about": "직접산출 headline(특허 0.410·논문 0.564)은 동결 데이터 스냅샷(cf2344519aad771a) 위에서 direct_output_robustness.py 가 산출한 confounder-only 직접산출 사양이다(재현치 0.4098/0.5638). 탐색 사양인 decircle_experiment.py 는 mediator-included + 간이 보간(n=516) 으로 0.451/0.543 을 내며, 정본은 confounder-only + KNN(n=427) 이다 — 차이는 개정이 아니라 사양 차이이고 둘 다 동결 데이터에서 재현된다. SHAP 축분해를 포함한 8개 family 전부를 동결 스냅샷 위에서 재실행해 재현을 확인했다(아래 _reproduction_environment).",
+    "_reproduction_environment": "uv.lock 고정 환경(xgboost 3.2.0·shap 0.52.0). macOS libomp 는 sklearn 동봉본(.venv/.../sklearn/.dylibs/libomp.dylib)을 DYLD_FALLBACK_LIBRARY_PATH 로 연결해 xgboost/SHAP 재실행. Excel 의존(gii_output_experiment)은 uv run --with openpyxl. 8개 family 전부 동결 스냅샷 위 재현치 일치(±0.001): decircle 0.410/0.564·within 0.238/0.182/0.164·gii_output 0.325, dor δ1.53/1.62, robustness_shap_allocation_anchor_rho 1.50x/34.28x·anchor 0.144·ρ −0.11/0.34, robustness_fdr_mediation_region 매개 +21/−13.9, external_reference_tfp 삼극0.189·ctfp0.13·SHAP인지14.8%, axis_split 3.3/19.34, discriminant 0.049/−0.074, culture_pred_edge −0.031/0.173.",
+    "_source_file_sha1": "2c55c314040ed14a",
+    "_data_snapshot_hash": "cf2344519aad771a",
+    "_builder": "analysis/build_frozen_direct_output_headline.py",
+    "decircle": {
+      "patent_cross_std": 0.41,
+      "article_cross_std": 0.564,
+      "gii_output_cross_std": 0.325,
+      "patent_within_percap_rawunit": 0.349,
+      "patent_within_percap_std": 0.238,
+      "patent_within_denomsep_b1_std": 0.182,
+      "patent_within_denomsep_b2_std": 0.164,
+      "article_within": "n.s.",
+      "gii_output_within": "n.s.",
+      "patent_within_p": 0.0006,
+      "gii_output_within_p": 0.1192,
+      "_alternative_specification_mediation": {
+        "_status": "대체 사양(WB-live · mediator-included) · 동결 데이터에서 미재현 · 헤드라인/결론에 사용하지 않음",
+        "mediation_patent_pct": 28,
+        "mediation_article_pct": 27,
+        "mediation_gii_output_pct": 41,
+        "_canonical_replacement": "robustness_fdr_mediation_region.mediation_ci (동결 confounder-only): 논문 +21.0%[5.9,44.4] 유의 · 특허 −13.9%[−61.6,36.0] 0 포함·음수·불안정",
+        "_note": "이 3값(28/27/41)은 WB-live · mediator-included 사양의 산출물로 동결 processed_dataset.csv 에서 재현되지 않는다. 따라서 본문 헤드라인·결론 근거에서 제외하고 대체 사양 기록으로만 보존한다. 정본 매개는 robustness_fdr_mediation_region.mediation_ci 단일 출처를 따른다."
+      },
+      "_within_note": "+0.349 는 per-capita 원단위 계수. 동일 표본 표준화 β=+0.238. 분모분리(raw-count+log(pop))=+0.182(B1)/+0.164(B2, +연구원밀도). 횡단 1차 β(+0.410 등, 동결 confounder-only)는 표준화이므로 within 0.349(원단위)와 직접 비교 금지.",
+      "_terminology": "GII output 서브지수는 GII 내부(50%) — '외생·순환0' 아님. 'GII 내부 input-output 분리'로 명명. 특허·논문 per-capita 는 '비합성 직접 산출'(PISA 기계중첩 제거, 완전 외부준거는 아님).",
+      "_source": "decircle_experiment.py / gii_output_experiment.py / patent_within_denominator_recheck.py",
+      "_spec_note": "decircle 횡단 1차 β(특허 +0.410·논문 +0.564)는 재현가능 동결 confounder-only 사양(처치 sci_literacy, 통제 rd_gdp_pct+gdp_per_capita; 연구원 밀도는 매개로 보아 제외)·동결 processed_dataset.csv — §4.9 direct_output_robustness 와 동일 값·동일 사양으로 통일하여 헤드라인↔강건성 사양 혼재를 제거했다. 동결 mediator-included(연구원 밀도 추가 통제) β는 특허 +0.354·논문 +0.437로 confounder-only보다 낮아 정상적 매개 방향(매개변수 추가 시 계수 하락)이다. 이전 WB-live·mediator-included 빈티지에서는 특허 0.451/논문 0.543로 drift했고 특허에서 conf<med 역전이 관찰됐으나(빈티지 인공물), 동결 재현 불가하여 헤드라인에서 제외했다. gii_output_cross_std(0.325)·within(0.238 등)·매개비율(28/27/41%)은 GII 산출 서브지수·WB-live mediator-included 사양의 보조값으로, 동결 confounder-only 1차 β와 별도 사양임을 명시한다.",
+      "_provenance": {
+        "_generator_script": "decircle_experiment.py / gii_output_experiment.py / patent_within_denominator_recheck.py / direct_output_robustness.py(횡단 β)",
+        "_frozen_snapshot": "동일 동결 데이터 스냅샷 cf2344519aad771a (file sha1 2c55c314040ed14a) 위 생성 스크립트 산출",
+        "_reproduced_in_frozen_env": true,
+        "_reproduction_log": "analysis/direct_output_robustness.py 재실행 stdout(+patent_within,+gii_output)",
+        "_reproduction_method": "순수회귀 재실행",
+        "_reproduction_note": "동결 스냅샷 위 본 환경 재실행 재현, 값 일치(±0.001) — JSON 값 복사 아님."
+      }
+    },
+    "direct_output_robustness": {
+      "_note": "1차 결과변수(직접산출)에 Oster·WCB·LOCO를 직접 수행한 강건성 — GII pooled 강건성의 일반화가 아닌 실측. confounder-only 사양(연구원밀도=매개변수 제외, R&D/GDP·1인당GDP 통제), 동결 데이터. beta_std 가 decircle 횡단 1차 β와 동일 값·동일 사양(헤드라인↔강건성 통일). beta_std_mediator_incl(연구원 밀도 추가 통제)는 confounder-only보다 낮아(특허 0.410→0.354·논문 0.564→0.437) 정상적 매개 방향이며, 이전 WB-live 빈티지의 0.451/0.543(특허 conf<med 역전)이 빈티지 drift 인공물이었음을 동결 데이터로 확인한다.",
+      "patents_per_m_log": {
+        "beta_std": 0.41,
+        "se": 0.114,
+        "p": 0.0003,
+        "oster_delta": 1.53,
+        "rmax_crit": 1.15,
+        "loco_range": [
+          0.333,
+          0.489
+        ],
+        "loco_all_sig": true,
+        "loco_all_pos": true,
+        "wcb_p": 0.002,
+        "n": 427,
+        "n_countries": 44,
+        "beta_std_mediator_incl": 0.354,
+        "n_mediator_incl": 397
+      },
+      "articles_per_m_log": {
+        "beta_std": 0.564,
+        "se": 0.101,
+        "p": 0.0001,
+        "oster_delta": 1.62,
+        "rmax_crit": 1.16,
+        "loco_range": [
+          0.536,
+          0.59
+        ],
+        "loco_all_sig": true,
+        "loco_all_pos": true,
+        "wcb_p": 0.001,
+        "n": 473,
+        "n_countries": 43,
+        "beta_std_mediator_incl": 0.437,
+        "n_mediator_incl": 440
+      },
+      "_source": "direct_output_robustness.py (동결 processed_dataset.csv, input_hash cf2344519aad771a)",
+      "_provenance": {
+        "_generator_script": "analysis/canonical/direct_output_robustness.py",
+        "_frozen_snapshot": "동일 동결 데이터 스냅샷 cf2344519aad771a (file sha1 2c55c314040ed14a) 위 생성 스크립트 산출",
+        "_reproduced_in_frozen_env": true,
+        "_reproduction_log": "analysis/direct_output_robustness.py 재실행 stdout",
+        "_reproduction_method": "순수회귀 재실행",
+        "_reproduction_note": "동결 스냅샷 위 본 환경 재실행 재현, 값 일치(±0.001) — JSON 값 복사 아님."
+      }
+    },
+    "robustness_shap_allocation_anchor_rho": {
+      "shap_block_correlation": {
+        "patent_ratio": 1.5,
+        "patent_cog": 0.3335,
+        "patent_att": 0.2222,
+        "article_ratio": 34.28,
+        "article_cog": 0.2923,
+        "article_att": 0.0085,
+        "_note": "SHAP 상관-배분 강건성: 인지축 5피처·태도축 2피처를 각 단일 복합지수로 묶어 Shapley 상관-배분 임의성을 제거한 뒤 인지/태도 SHAP 비율 재산출. 특허 1.50x·논문 34.3x — 단일 복합에서도 인지 우세 유지. 단 특허에서 다피처 기준 3.3x→1.5x 감소는 상관-피처 배분이 인지 우세 배율을 부분 부풀렸음을 시사(논문은 태도복합≈0이라 오히려 상승). 인지>태도 방향은 배분 인공물이 아니나 강도는 단일 복합 기준으로 해석."
+      },
+      "within_anchor_only": {
+        "patent_beta_std": 0.1435,
+        "patent_p": 0.0542,
+        "n": 126,
+        "n_countries": 44,
+        "_note": "특허 within 을 PISA 실측 앵커연도(2012·2015·2018·2022)만으로 국가 FE 재추정. β=+0.144(p=0.054, 경계유의) — 전체(보간 포함) +0.238(p=0.0006)보다 약화. 보간이 within 강도를 부풀렸으나 앵커전용에서도 양(+)·경계유의라 순수 보간 인공물은 아님. within 을 보조 증거로 더 강하게 강등하는 근거."
+      },
+      "mediation_rho_sensitivity": {
+        "patent_a": 0.304,
+        "patent_b": -0.1419,
+        "patent_acme": -0.0432,
+        "patent_rho_star": -0.11,
+        "article_a": 0.2903,
+        "article_b": 0.4007,
+        "article_acme": 0.1163,
+        "article_rho_star": 0.3408,
+        "_note": "Imai-Tingley LSEM 근사 ρ*(=b·σ_εM/σ_εY, ACME=0 임계 매개변수-결과 잔차상관). 특허 ρ*=−0.11(작은 미관측 교란에 부호 전환·불안정), 논문 ρ*=+0.34(중간 강건). 동결·confounder-only 통제 사양에서 특허 b path 가 음(−)으로 사양 민감 — 매개를 인과 경로가 아닌 탐색적 분해로 한정하는 근거를 강화."
+      },
+      "_source": "robustness_shap_allocation_anchor_rho.py (동결 processed_dataset.csv, seed 42, input_hash cf2344519aad771a)",
+      "_provenance": {
+        "_generator_script": "analysis/canonical/robustness_shap_allocation_anchor_rho.py",
+        "_frozen_snapshot": "동일 동결 데이터 스냅샷 cf2344519aad771a (file sha1 2c55c314040ed14a) 위 생성 스크립트 산출",
+        "_reproduced_in_frozen_env": true,
+        "_reproduction_log": "analysis/robustness_shap_allocation_anchor_rho.py 재실행 stdout",
+        "_reproduction_method": "xgboost SHAP 재실행(libomp shim, _reproduction_environment 참조)",
+        "_reproduction_note": "동결 스냅샷 위 본 환경 재실행 재현, 값 일치(±0.001) — JSON 값 복사 아님."
+      }
+    },
+    "robustness_fdr_mediation_region": {
+      "fdr_within": {
+        "patent_p_adj": 0.0018,
+        "gii_output_p_adj": 0.1192,
+        "gii_composite_p_adj": 0.0782,
+        "patent_only_survives": true,
+        "_note": "within 3타깃 Benjamini–Hochberg 보정. 특허 within(p_adj 0.0018)만 FDR<0.05 생존, GII산출(0.119)·GII종합(0.078) n.s. — 다중검정 후에도 특허 단일 양성이 유지되나 within 은 1차 증거가 아닌 보조."
+      },
+      "fdr_cross": {
+        "patent_p_adj": 0.0004,
+        "article_p_adj": 0.0003,
+        "gii_output_p_adj": 0.001,
+        "all_survive": true,
+        "_note": "1차 횡단 3타깃 BH 보정 전부 FDR<0.05 — 1차 결과는 다중검정에 견고."
+      },
+      "mediation_ci": {
+        "patent_pct": -13.9,
+        "patent_ci": [
+          -61.6,
+          36.0
+        ],
+        "patent_includes_zero": true,
+        "article_pct": 21.0,
+        "article_ci": [
+          5.9,
+          44.4
+        ],
+        "article_includes_zero": false,
+        "_note": "직접산출 매개비율 국가 클러스터 부트스트랩(2000회, 동결 confounder-only 사양). 특허 매개는 −13.9%·CI[−61.6,36.0]로 0 포함·부호 음수 = 매우 불안정(robustness_shap_allocation_anchor_rho ρ*−0.11과 정합), 논문만 +21.0%·CI[5.9,44.4] 유의. decircle.mediation_patent_pct 28%는 WB-live mediator-included 사양이며 동결에서 재현되지 않음 — 매개를 헤드라인에서 강등하고 특허 매개는 탐색적·불안정으로 명시."
+      },
+      "leave_region": {
+        "full": 0.4098,
+        "europe_excl": 0.7205,
+        "asia_excl": 0.3549,
+        "americas_excl": 0.3228,
+        "oceania_excl": 0.3967,
+        "range": [
+          0.3228,
+          0.7205
+        ],
+        "all_positive_sig": true,
+        "_note": "특허 횡단 β 대륙(Europe·Asia·Americas·Oceania) 제외 재추정. 부호·유의성은 전부 견고(양·p<0.05)하나 크기는 0.32~0.72로 표본 구성 민감(Europe 28국 제외 시 0.72로 배증) — 외적 타당도가 표본 구성에 의존함을 시사."
+      },
+      "between_only": {
+        "patent_beta": 0.3928,
+        "patent_p": 0.0015,
+        "article_beta": 0.585,
+        "_note": "국가 평균 기반 순수 between 회귀. 특허 +0.393(pooled +0.410과 거의 동일)·논문 +0.585로, 횡단 연관이 패널 구조가 아니라 순수 국가 간 차이에서 식별됨을 확인(within 차원은 거의 장식적)."
+      },
+      "effective_sample": {
+        "nominal_obs": 528,
+        "effective_countries": 44,
+        "pisa_anchor_pct": 31,
+        "attitude_anchor_pct": 6.2,
+        "patent_n": 427,
+        "article_n": 473,
+        "sci_trust_n": 384,
+        "_note": "명목 528은 44국 저빈도 보간 패널의 명목치. PISA 앵커 31%·태도 6.2%, 직접산출 타깃 n 특허 427·논문 473."
+      },
+      "_source": "robustness_fdr_mediation_region.py (동결 processed_dataset.csv, seed 42, input_hash cf2344519aad771a)",
+      "_provenance": {
+        "_generator_script": "analysis/canonical/robustness_fdr_mediation_region.py",
+        "_frozen_snapshot": "동일 동결 데이터 스냅샷 cf2344519aad771a (file sha1 2c55c314040ed14a) 위 생성 스크립트 산출",
+        "_reproduced_in_frozen_env": true,
+        "_reproduction_log": "analysis/robustness_fdr_mediation_region.py 재실행 stdout",
+        "_reproduction_method": "순수회귀 재실행",
+        "_reproduction_note": "동결 스냅샷 위 본 환경 재실행 재현, 값 일치(±0.001) — JSON 값 복사 아님."
+      }
+    },
+    "external_reference_tfp": {
+      "tfp_pwt": {
+        "ctfp_cross_beta": 0.1268,
+        "ctfp_p": 0.2875,
+        "ctfp_oster_delta": 0.393,
+        "rtfpna_cross_beta": -0.3575,
+        "rtfpna_p": 0.0128,
+        "ctfp_within_p": 0.9647,
+        "rtfpna_within_p": 0.1563,
+        "shap_cog_pct": 14.78,
+        "shap_att_pct": 0.0,
+        "_note": "GII 완전독립 외부준거(Penn World Table 11.0 TFP, Feenstra·Inklaar·Timmer 2015 AER, CC BY 4.0, 44국×12년 528 완전커버). 인지 인적자본–TFP 연관 미검출 — TFP 수준 ctfp β+0.13·p=0.29 n.s.(Oster δ<1), TFP 성장 rtfpna β−0.36·p=0.013(음의 수렴: 고생산성국 성장 둔화). within 미검출. SHAP 인지축 14.8% vs 태도 0%로 정체는 유지. 결론: 연관은 공식 과기산출에 특이적, 먼 거시 경제결과로는 확장 안 됨(결과 범위 한정·분별타당도를 GII 가족 밖에서 외부 입증)."
+      },
+      "triadic_oecd": {
+        "cross_beta": 0.1888,
+        "p": 0.0003,
+        "oster_delta": 1.996,
+        "n": 484,
+        "n_countries": 44,
+        "_note": "GII-PCT와 측정·출처 분리된 특허 질 외부준거(OECD 삼극특허 패밀리, EPO+JPO+USPTO 동시·INVENTOR·PRIORITY·Patent Families·Total). per-capita 횡단 β+0.189·p=0.0003·Oster δ=1.996>1 → 연관 생존·견고(GII pooled δ2.43와 직접산출 특허 δ1.53 사이). 단 GII 5.2.5(patent families ≥2 offices)와 개념계열 동일이라 완전독립은 TFP뿐. 한국 sanity 2012=2493.6·2019=3337.5(분수카운트, PWT 정찰과 일치)."
+      },
+      "_source": "external_reference_tfp.py (PWT 11.0 + OECD 삼극 SDMX 동결 스냅샷: external_tfp_pwt110.csv·external_triadic_oecd.csv)",
+      "_provenance": {
+        "_generator_script": "analysis/canonical/external_reference_tfp.py",
+        "_frozen_snapshot": "동일 동결 데이터 스냅샷 cf2344519aad771a (file sha1 2c55c314040ed14a) 위 생성 스크립트 산출",
+        "_reproduced_in_frozen_env": true,
+        "_reproduction_log": "analysis/external_reference_tfp.py 재실행 stdout",
+        "_reproduction_method": "xgboost SHAP 재실행(libomp shim, _reproduction_environment 참조)",
+        "_reproduction_note": "동결 스냅샷 위 본 환경 재실행 재현, 값 일치(±0.001) — JSON 값 복사 아님."
+      }
+    },
+    "direct_output_axis_split": {
+      "patent_cog_attitude_ratio_base": 3.2,
+      "patent_cog_attitude_ratio_lag": 3.3,
+      "patent_cog_pct_within": 76.7,
+      "patent_att_pct_within": 23.3,
+      "patent_cog_pct_of_model": 27.27,
+      "patent_att_pct_of_model": 8.27,
+      "patent_pisa_math_pct_of_model": 9.07,
+      "patent_n": 427,
+      "article_cog_attitude_ratio_base": 18.24,
+      "article_cog_attitude_ratio_lag": 19.34,
+      "article_cog_pct_within": 95.1,
+      "article_att_pct_within": 4.9,
+      "article_cog_pct_of_model": 39.79,
+      "article_att_pct_of_model": 2.06,
+      "article_pisa_math_pct_of_model": 23.72,
+      "article_n": 473,
+      "_note": "정체성 주장('신호는 태도가 아니라 인지 인적자본') 비순환 재검증 — 리뷰 최우선 지적(인지축 SHAP 우세가 GII 순환의 by-construction 인공물일 가능성) 정면 해소. GII 산출 피처(patent_apps·journal_articles·hi_tech_export_pct[+lag])를 X에서 제외하고 비합성 직접 산출 타깃으로 XGBoost+SHAP 축 분해. 인지/태도 비율(lag 포함): 특허 3.3x·논문 19.3x. GII 종합(8.0x)보다 특허는 낮음 → 순환이 인지 우세를 부분 과장했으나, 제거 후에도 인지 우세 견고(특허), 논문은 오히려 강화(19.3x). 결론: 인지 우세는 by-construction 인공물이 아님.",
+      "_source": "direct_output_axis_split.py (동결 processed_dataset.csv, input_hash cf2344519aad771a, seed 42, n_estimators 300, 트리 SHAP는 표준화 불변)",
+      "_provenance": {
+        "_generator_script": "analysis/canonical/direct_output_axis_split.py",
+        "_frozen_snapshot": "동일 동결 데이터 스냅샷 cf2344519aad771a (file sha1 2c55c314040ed14a) 위 생성 스크립트 산출",
+        "_reproduced_in_frozen_env": true,
+        "_reproduction_log": "analysis/direct_output_axis_split.py 재실행 stdout",
+        "_reproduction_method": "xgboost SHAP 재실행(libomp shim, _reproduction_environment 참조)",
+        "_reproduction_note": "동결 스냅샷 위 본 환경 재실행 재현, 값 일치(±0.001) — JSON 값 복사 아님."
+      }
+    },
+    "discriminant_validity": {
+      "target": "manufacturing_value_added_pct_gdp (NV.IND.MANF.ZS)",
+      "pooled_ols_beta": 0.049,
+      "pooled_ols_p": 0.7464,
+      "within_fe_beta": -0.074,
+      "within_fe_p": 0.7461,
+      "n": 523,
+      "n_countries": 44,
+      "_note": "판별타당도 placebo — 혁신과 무관한 외부 outcome(제조업 부가가치 %GDP)에 sci_literacy 가 pooled(β=+0.049, p=0.75)·within(β=−0.074, p=0.75) 모두 비유의(n.s.). 과학문화 신호가 혁신 산출에 특이적이며 일반 경제지표로 확산되지 않음을 입증.",
+      "_source": "gii_output_experiment.py (동결 데이터, n=523·44국)",
+      "_provenance": {
+        "_generator_script": "analysis/gii_output_experiment.py",
+        "_frozen_snapshot": "동일 동결 데이터 스냅샷 cf2344519aad771a (file sha1 2c55c314040ed14a) 위 생성 스크립트 산출",
+        "_reproduced_in_frozen_env": true,
+        "_reproduction_log": "analysis/gii_output.py 재실행 stdout",
+        "_reproduction_method": "순수회귀 재실행",
+        "_reproduction_note": "동결 스냅샷 위 본 환경 재실행 재현, 값 일치(±0.001) — JSON 값 복사 아님."
+      }
+    },
+    "culture_pred_edge": {
+      "patent_target": 0.337,
+      "article_target": 0.09,
+      "gii_input_subindex": 0.173,
+      "gii_output_subindex": -0.031,
+      "gii_combined": 0.049,
+      "_note": "문화 피처(만)의 R&D투입(만) 대비 예측 한계기여 차(SHAP). 비합성 직접 산출 타깃에서 양(+, 특허 +0.337·논문 +0.090), GII 산출 서브지수에서는 거의 0(−0.031)으로 투입과 비등. 직접산출에서만 문화 예측 우위가 나타나고 GII 산출 서브지수에서는 비등이라는 §4.8 단서의 동결 출처.",
+      "_source": "gii_output_experiment.py·decircle_experiment.py 로그",
+      "_provenance": {
+        "_generator_script": "analysis/gii_output_experiment.py / decircle_experiment.py",
+        "_frozen_snapshot": "동일 동결 데이터 스냅샷 cf2344519aad771a (file sha1 2c55c314040ed14a) 위 생성 스크립트 산출",
+        "_reproduced_in_frozen_env": true,
+        "_reproduction_log": "analysis/gii_output.py 재실행 stdout",
+        "_reproduction_method": "xgboost SHAP 재실행(libomp shim, _reproduction_environment 참조)",
+        "_reproduction_note": "동결 스냅샷 위 본 환경 재실행 재현, 값 일치(±0.001) — JSON 값 복사 아님."
+      }
+    }
+  }
+}

@@ -1,0 +1,531 @@
+{
+  "_meta": {
+    "purpose": "주 분석 결과 단일 source-of-truth. 논문·findings·대시보드·HTML 은 반드시 이 파일의 값을 인용한다. 산문에서 베껴 적지 말 것.",
+    "generated": "2026-06-26",
+    "data_snapshot_hash": "cf2344519aad771a",
+    "country_set": "pisa-gii",
+    "n_countries": 44,
+    "n_obs": 528,
+    "seed": 42,
+    "reproduce": "cd 코드/files; main.py --country-set pisa-gii --output <dir> (CV·SHAP단일·korea·scenario). 보강분석은 analysis/*.py (로그 보존: ./logs/). 데이터는 ./processed_dataset.csv 로 동결(WB live drift 차단).",
+    "_descriptive_unfrozen_figures": "다음 본문 수치는 헤드라인 결과가 아니라 데이터 감사·표본 구성을 서술하는 맥락 값으로, findings.md/감사 로그에서 인용되며 파이프라인 동결 헤드라인 키가 아니다: PISA 실측 앵커 개선 23%→31%(최종 31%만 동결), 전처리 누수효과 −0.005(누수 차단 감사 결과·미미), 국가별 평균 절대편차 ±1.6점, 20개국 표본에서 모든 모형 클래스 음의 CV R²(20국 XGB −0.305 동결, 타 클래스는 findings 인용), 149국 전체 표본 구성 OECD 26%·고소득 36%(44국 표본 86%/82%와 대비용 모집단 통계). 정량 헤드라인 주장에는 사용하지 않는다."
+  },
+  "model": {
+    "n_base_features": 20,
+    "n_final_features": 32,
+    "final_feature_composition": "base 20 + 복합지수 4 + lag3 8",
+    "cv_r2_fold": 0.77,
+    "cv_r2_oof": 0.81,
+    "cv_r2_oof_10seed_mean": 0.821,
+    "cv_r2_oof_10seed_sd": 0.004,
+    "cv_r2_oof_10seed_range": [
+      0.813,
+      0.826
+    ],
+    "rmse": 4.13,
+    "_source": "main.py(fold) / paper_tableB_stability.py(OOF 10seed)"
+  },
+  "shap_raw_20seed_pct": {
+    "물적규모": [
+      50.6,
+      1.4
+    ],
+    "과학문화": [
+      28.6,
+      1.0
+    ],
+    "보상수준": [
+      13.0,
+      0.5
+    ],
+    "운영구조": [
+      7.7,
+      0.4
+    ],
+    "_source": "paper_tableB_stability.py T5(raw)"
+  },
+  "shap_controlled_20seed_pct": {
+    "과학문화": [
+      38.4,
+      1.3
+    ],
+    "물적규모": [
+      28.8,
+      1.8
+    ],
+    "보상수준": [
+      23.6,
+      0.9
+    ],
+    "운영구조": [
+      9.2,
+      0.4
+    ],
+    "_note": "gdp+순환산출+복합 제거 후. 통제하면 과학문화>물적규모(95% 비중첩). 보편순위 아님 — 통제셋 조건부 회계.",
+    "_source": "paper_tableB_stability.py"
+  },
+  "variance_decomposition": {
+    "between_pct": 95,
+    "within_pct": 5,
+    "_source": "paper_tables_A_all.py A8 — 분산성분 between 92.52% : within 4.41%(총분산 대비, 잔차 약 3%). between/(between+within)=92.52/96.93≈95.4% → between_pct 95·within_pct 5는 설명분산(between+within) 중 비중(반올림). 본문은 '설명분산 중 국가 간 약 95%' 또는 'between:within≈21:1'로 정밀 표기."
+  },
+  "pooled_regression": {
+    "pooled_beta_gii_fullstd": 0.394,
+    "pooled_beta_gii_rawunit": 3.84,
+    "vif_sci_literacy": 2.08,
+    "beta0_uncontrolled_fullstd": 0.7547,
+    "within_fe_gii": 1.3,
+    "within_fe_gii_significant": false,
+    "within_fe_gii_p": 0.0521,
+    "n_obs": 528,
+    "n_countries": 44,
+    "controls": [
+      "rd_gdp_pct",
+      "gdp_per_capita"
+    ],
+    "loco_jackknife": {
+      "beta_full_range": [
+        0.367,
+        0.421
+      ],
+      "beta_mean": 0.394,
+      "all_significant_p05": true,
+      "all_positive": true,
+      "most_influential": "ISR(-6.9%) / CHE(+6.8%)",
+      "_source": "loco_jackknife.py"
+    },
+    "_note": "동결 데이터 재현. 완전표준화 +0.394 = Oster confounder-only β1(0.3943)과 일치(내부 정합). 원단위 +3.84 GII점/1SD, p<0.001, VIF 2.08(<3). 헤드라인은 0.394(완전표준화)/3.84(원단위)로 통일한다. WB 라이브 빈티지에서 산출되는 대체값은 동결 데이터에서 재현되지 않으므로 사용하지 않는다.",
+    "_source": "pooled_beta_canonical.py (동결 processed_dataset.csv, input_hash cf2344519aad771a)"
+  },
+  "mediation": {
+    "ratio_point_pct": 52.2,
+    "ratio_bootstrap_pct": 49.1,
+    "ratio_bootstrap_ci": [
+      32.2,
+      67.2
+    ],
+    "indirect_effect_fullstd": 0.363,
+    "indirect_effect_fullstd_point": 0.396,
+    "indirect_effect_rawscore_axb": 3.863,
+    "indirect_effect_ci_fullstd": [
+      0.243,
+      0.491
+    ],
+    "aux_mediation_paths": {
+      "physical_scale": {
+        "a": 0.634,
+        "b": 5.138,
+        "ratio_pct": 44.1,
+        "_note": "물적규모 종합 매개경로(표7 2행)"
+      },
+      "rd_intensity": {
+        "a": 0.525,
+        "b": 4.251,
+        "ratio_pct": 30.2,
+        "_note": "R&D 강도 매개경로(표7 3행)"
+      }
+    },
+    "a_path": 0.75,
+    "b_path": 5.151,
+    "c_total_rawscore": 7.395,
+    "_scale_note": "a·b=3.863·c=7.395 는 Y=GII 원점수(부분표준화). 점추정 완전표준화 간접효과 indirect_effect_fullstd_point = a·b 3.863 ÷ 타깃SD 9.75 = 0.396(= ratio_point 52.2% × 완전표준화 총효과 0.758). indirect_effect_fullstd 0.363 은 부트스트랩 평균 간접효과(CI [0.243,0.491] 중점 ≈0.367, ratio_bootstrap 49.1% 와 짝)로 점추정 0.396 과 다르다. 비율 49~52% 는 스케일 불변. 헤드라인=부트 49.1%[32-67].",
+    "_source": "paper_tableB_stability.py T7"
+  },
+  "decircle": {
+    "patent_cross_std": 0.41,
+    "article_cross_std": 0.564,
+    "gii_output_cross_std": 0.325,
+    "patent_within_percap_rawunit": 0.349,
+    "patent_within_percap_std": 0.238,
+    "patent_within_denomsep_b1_std": 0.182,
+    "patent_within_denomsep_b2_std": 0.164,
+    "article_within": "n.s.",
+    "gii_output_within": "n.s.",
+    "patent_within_p": 0.0006,
+    "gii_output_within_p": 0.1192,
+    "_alternative_specification_mediation": {
+      "_status": "대체 사양(WB-live · mediator-included) · 동결 데이터에서 미재현 · 헤드라인/결론에 사용하지 않음",
+      "mediation_patent_pct": 28,
+      "mediation_article_pct": 27,
+      "mediation_gii_output_pct": 41,
+      "_canonical_replacement": "robustness_fdr_mediation_region.mediation_ci (동결 confounder-only): 논문 +21.0%[5.9,44.4] 유의 · 특허 −13.9%[−61.6,36.0] 0 포함·음수·불안정",
+      "_note": "이 3값(28/27/41)은 WB-live · mediator-included 사양의 산출물로 동결 processed_dataset.csv 에서 재현되지 않는다. 따라서 본문 헤드라인·결론 근거에서 제외하고 대체 사양 기록으로만 보존한다. 정본 매개는 robustness_fdr_mediation_region.mediation_ci 단일 출처를 따른다."
+    },
+    "_within_note": "+0.349 는 per-capita 원단위 계수. 동일 표본 표준화 β=+0.238. 분모분리(raw-count+log(pop))=+0.182(B1)/+0.164(B2, +연구원밀도). 횡단 1차 β(+0.410 등, 동결 confounder-only)는 표준화이므로 within 0.349(원단위)와 직접 비교 금지.",
+    "_terminology": "GII output 서브지수는 GII 내부(50%) — '외생·순환0' 아님. 'GII 내부 input-output 분리'로 명명. 특허·논문 per-capita 는 '비합성 직접 산출'(PISA 기계중첩 제거, 완전 외부준거는 아님).",
+    "_source": "decircle_experiment.py / gii_output_experiment.py / patent_within_denominator_recheck.py",
+    "_spec_note": "decircle 횡단 1차 β(특허 +0.410·논문 +0.564)는 재현가능 동결 confounder-only 사양(처치 sci_literacy, 통제 rd_gdp_pct+gdp_per_capita; 연구원 밀도는 매개로 보아 제외)·동결 processed_dataset.csv — §4.9 direct_output_robustness 와 동일 값·동일 사양으로 통일하여 헤드라인↔강건성 사양 혼재를 제거했다. 동결 mediator-included(연구원 밀도 추가 통제) β는 특허 +0.354·논문 +0.437로 confounder-only보다 낮아 정상적 매개 방향(매개변수 추가 시 계수 하락)이다. 이전 WB-live·mediator-included 빈티지에서는 특허 0.451/논문 0.543로 drift했고 특허에서 conf<med 역전이 관찰됐으나(빈티지 인공물), 동결 재현 불가하여 헤드라인에서 제외했다. gii_output_cross_std(0.325)·within(0.238 등)·매개비율(28/27/41%)은 GII 산출 서브지수·WB-live mediator-included 사양의 보조값으로, 동결 confounder-only 1차 β와 별도 사양임을 명시한다."
+  },
+  "wild_cluster_bootstrap": {
+    "wcb_p": 0.001,
+    "cluster_robust_t": 6.09,
+    "method": "Rademacher, restricted(null-imposed), 999 reps, country cluster (Cameron-Gelbach-Miller 2008)",
+    "_source": "wild_cluster_bootstrap.py"
+  },
+  "oster": {
+    "beta0_uncontrolled": 0.7547,
+    "R0_sq": 0.5696,
+    "Rmax": 1.0,
+    "confounder_only": {
+      "controls": [
+        "rd_gdp_pct",
+        "gdp_per_capita"
+      ],
+      "beta1": 0.3943,
+      "R1_sq": 0.8252,
+      "delta": 2.43,
+      "beta_star_d1": 0.2323,
+      "identified_set": [
+        0.2323,
+        0.3943
+      ]
+    },
+    "mediator_included": {
+      "controls": [
+        "rd_gdp_pct",
+        "researchers_per_m",
+        "gdp_per_capita"
+      ],
+      "beta1": 0.4193,
+      "R1_sq": 0.8261,
+      "delta": 4.03,
+      "beta_star_d1": 0.3152,
+      "identified_set": [
+        0.3152,
+        0.4193
+      ]
+    },
+    "rmax_sensitivity_confounder_only": {
+      "delta_at_Rmax_0.85": 17.1,
+      "delta_at_Rmax_0.90": 5.69,
+      "delta_at_Rmax_0.95": 3.41,
+      "delta_at_Rmax_1.00": 2.43,
+      "delta1_critical_Rmax": 1.25,
+      "_note": "δ=1 임계 Rmax=1.25>1.0 이고 R²는 1 초과 불가 → 가능한 모든 Rmax∈(0.825,1.0]에서 δ>1 보장(강건). Rmax=1.0 표준 보고, 0.85 같은 보수적 상한에서도 δ≫1.",
+      "_source": "oster_rmax_curve.py"
+    },
+    "_headline": "confounder-only δ=2.43 (연구원밀도=매개변수 제외). mediator-included δ=4.03 부기. 둘 다 δ>1·식별구간 0 배제. Rmax 민감도: δ=1 임계 Rmax=1.25>1 → 모든 가능 Rmax 에서 δ>1.",
+    "_source": "oster_sensitivity.py(med-incl) / oster_confounder_only.py(conf-only)"
+  },
+  "construct_axis_split": {
+    "cognitive_attitude_ratio_base": 8.0,
+    "cognitive_attitude_ratio_lag": 9.3,
+    "attitude_pct_of_model": 2.46,
+    "sci_trust_pct_of_model": 0.73,
+    "sci_culture_category_pct_20seed": 28.6,
+    "_source": "sci_culture_axis_split.py"
+  },
+  "direct_output_axis_split": {
+    "patent_cog_attitude_ratio_base": 3.2,
+    "patent_cog_attitude_ratio_lag": 3.3,
+    "patent_cog_pct_within": 76.7,
+    "patent_att_pct_within": 23.3,
+    "patent_cog_pct_of_model": 27.27,
+    "patent_att_pct_of_model": 8.27,
+    "patent_pisa_math_pct_of_model": 9.07,
+    "patent_n": 427,
+    "article_cog_attitude_ratio_base": 18.24,
+    "article_cog_attitude_ratio_lag": 19.34,
+    "article_cog_pct_within": 95.1,
+    "article_att_pct_within": 4.9,
+    "article_cog_pct_of_model": 39.79,
+    "article_att_pct_of_model": 2.06,
+    "article_pisa_math_pct_of_model": 23.72,
+    "article_n": 473,
+    "_note": "정체성 주장('신호는 태도가 아니라 인지 인적자본') 비순환 재검증 — 리뷰 최우선 지적(인지축 SHAP 우세가 GII 순환의 by-construction 인공물일 가능성) 정면 해소. GII 산출 피처(patent_apps·journal_articles·hi_tech_export_pct[+lag])를 X에서 제외하고 비합성 직접 산출 타깃으로 XGBoost+SHAP 축 분해. 인지/태도 비율(lag 포함): 특허 3.3x·논문 19.3x. GII 종합(8.0x)보다 특허는 낮음 → 순환이 인지 우세를 부분 과장했으나, 제거 후에도 인지 우세 견고(특허), 논문은 오히려 강화(19.3x). 결론: 인지 우세는 by-construction 인공물이 아님.",
+    "_source": "direct_output_axis_split.py (동결 processed_dataset.csv, input_hash cf2344519aad771a, seed 42, n_estimators 300, 트리 SHAP는 표준화 불변)"
+  },
+  "sample": {
+    "oecd_pct": 86,
+    "highincome_pct": 82,
+    "pisa_anchor_pct": 31,
+    "attitude_anchor_pct": 6.2,
+    "_source": "effective_sample_audit.py"
+  },
+  "sample_expansion": {
+    "cv_r2_20country": -0.305,
+    "cv_r2_44country": 0.77,
+    "cv_r2_149country": 0.85,
+    "rmse_20country": 4.69,
+    "rmse_44country": 4.08,
+    "rmse_149country": 4.7,
+    "train_r2_20country": 0.975,
+    "train_r2_44country": 0.993,
+    "train_r2_149country": 0.991,
+    "_note": "train_r2(0.97~0.99)≫cv_r2 는 표본 작은 트리모델의 통상적 과적합 — 일반화 성능은 cv_r2 로 판단. 국가 범위만 바꾼 통제 대조(피처·전처리 동일). R² 급등은 정확도 향상이 아니라 타깃 std 확대 착시(RMSE 거의 불변). 44 vs 149 격차는 표본 구성(OECD 편중) 교란 포함.",
+    "_source": "findings.md §1.5 (20국 −0.305) / paper_v2.js 표2 (149국 0.850) — main.py --country-set {default,pisa-gii,gii}. 단일 재현 로그는 5종 로그에 미수록, findings 정본 인용."
+  },
+  "model_class_comparison": {
+    "xgboost_oof": 0.81,
+    "elasticnet_oof": 0.783,
+    "random_forest_oof": 0.767,
+    "lasso_oof": 0.764,
+    "ridge_oof": 0.727,
+    "ols_oof": 0.704,
+    "xgboost_cv_fold": 0.759,
+    "ols_cv_fold": 0.64,
+    "cv_fold_by_model": {
+      "xgboost": 0.759,
+      "elasticnet": 0.725,
+      "random_forest": 0.707,
+      "lasso": 0.697,
+      "ridge": 0.668,
+      "ols": 0.64
+    },
+    "cv_sd_by_model": {
+      "xgboost": 0.094,
+      "elasticnet": 0.124,
+      "random_forest": 0.099,
+      "lasso": 0.15,
+      "ridge": 0.169,
+      "ols": 0.19
+    },
+    "rmse_by_model": {
+      "xgboost": 4.182,
+      "elasticnet": 4.41,
+      "random_forest": 4.648,
+      "lasso": 4.591,
+      "ridge": 4.854,
+      "ols": 5.041
+    },
+    "xgboost_10seed_rmse": 4.125,
+    "xgboost_10seed_rmse_sd": 0.045,
+    "oof_gap_linear_tree": 0.107,
+    "_note": "동일 표준화 X·GroupKFold(국가) 5-fold. XGBoost 최고이나 최선 선형(ElasticNet)과 OOF 격차 0.027·최약 선형(OLS)과도 0.107뿐 → 정확도 한계는 모델이 아니라 표본.",
+    "_source": "log_paper_tables_T2_T4.txt T4"
+  },
+  "timelag_corr": {
+    "lag0": 0.755,
+    "lag3": 0.766,
+    "lag5": 0.767,
+    "lag7": 0.763,
+    "headline": 0.76,
+    "_note": "sci_literacy 선행 상관 r(현재 GII). 0~7년에서 ~0.76 거의 일정 → 강한 선행이 아니라 과학소양의 느린 변동과 정합.",
+    "_source": "log_paper_tables_A_all.txt A1"
+  },
+  "pisa_math_shap_pct": {
+    "pct_of_model": 7.26,
+    "pct_within_sci_culture": 27.38,
+    "_note": "PISA 수학 단일 피처 mean(|SHAP|) 비중. 태도축 2피처 합(2.46%)을 단독 상회 → 과학문화 신호의 인지축 우세 근거.",
+    "_source": "log_sci_culture_axis_split.txt"
+  },
+  "korea_local": {
+    "_note": "단일 실행 방법론 시연(WB drift 로 변동) — 정책 처방 아님. main.py --country-set pisa-gii 단일 학습의 한국 2023 SHAP local.",
+    "predicted_score_2023": 58.61,
+    "shap_top_contributors": {
+      "gdp_per_capita": 2.1927,
+      "idx_hard_rd": 2.1029,
+      "pisa_math": 0.9028,
+      "pisa_reading": 0.7449,
+      "rd_gdp_pct": 0.6769,
+      "mobile_subs_per100": 0.5693,
+      "sci_literacy": 0.5617,
+      "researchers_per_m": 0.5582,
+      "hi_tech_export_pct": 0.3668,
+      "idx_structure": 0.3495
+    },
+    "shap_bottom_contributors": {
+      "idx_sci_culture": -0.2,
+      "youth_unemp_pct_lag3": -0.2,
+      "idx_economic": -0.16,
+      "internet_users_pct": -0.14
+    },
+    "negative_shap_range": [
+      -0.2,
+      -0.07
+    ],
+    "xgb_marginal_sci_literacy": 0.086,
+    "_source": "main_xai_results.json korea_bottlenecks (input_hash cf2344519aad771a). 음수 기여는 상대 열위(▽ 개선 여지)이며 정책 처방 아님(§4.4). xgb_marginal_sci_literacy(+0.086)은 sci_literacy 단일 피처 예측 한계기여(표6, 카테고리 과학문화 +0.053). 단일 실행 시연이라 WB drift 로 절대값 변동."
+  },
+  "scenario": {
+    "_note": "단일 실행 방법론 시연(WB drift 로 변동) — 정책 처방 아님. 4대 카테고리 +20% 개입의 반사실 예측 변화. 대부분 ±0.3 이내(횡단 모델은 within 개입 외삽 불가).",
+    "baseline": {
+      "KOR": 58.61,
+      "JPN": 54.34,
+      "USA": 61.61,
+      "DEU": 58.46,
+      "FIN": 60.2
+    },
+    "delta_kor": {
+      "과학문화": -0.11,
+      "물적규모": 0.0,
+      "운영구조": -0.01,
+      "보상수준": 0.0
+    },
+    "_source": "main_xai_results.json scenario_matrix (input_hash cf2344519aad771a)"
+  },
+  "direct_output_robustness": {
+    "_note": "1차 결과변수(직접산출)에 Oster·WCB·LOCO를 직접 수행한 강건성 — GII pooled 강건성의 일반화가 아닌 실측. confounder-only 사양(연구원밀도=매개변수 제외, R&D/GDP·1인당GDP 통제), 동결 데이터. beta_std 가 decircle 횡단 1차 β와 동일 값·동일 사양(헤드라인↔강건성 통일). beta_std_mediator_incl(연구원 밀도 추가 통제)는 confounder-only보다 낮아(특허 0.410→0.354·논문 0.564→0.437) 정상적 매개 방향이며, 이전 WB-live 빈티지의 0.451/0.543(특허 conf<med 역전)이 빈티지 drift 인공물이었음을 동결 데이터로 확인한다.",
+    "patents_per_m_log": {
+      "beta_std": 0.41,
+      "se": 0.114,
+      "p": 0.0003,
+      "oster_delta": 1.53,
+      "rmax_crit": 1.15,
+      "loco_range": [
+        0.333,
+        0.489
+      ],
+      "loco_all_sig": true,
+      "loco_all_pos": true,
+      "wcb_p": 0.002,
+      "n": 427,
+      "n_countries": 44,
+      "beta_std_mediator_incl": 0.354,
+      "n_mediator_incl": 397
+    },
+    "articles_per_m_log": {
+      "beta_std": 0.564,
+      "se": 0.101,
+      "p": 0.0001,
+      "oster_delta": 1.62,
+      "rmax_crit": 1.16,
+      "loco_range": [
+        0.536,
+        0.59
+      ],
+      "loco_all_sig": true,
+      "loco_all_pos": true,
+      "wcb_p": 0.001,
+      "n": 473,
+      "n_countries": 43,
+      "beta_std_mediator_incl": 0.437,
+      "n_mediator_incl": 440
+    },
+    "_source": "direct_output_robustness.py (동결 processed_dataset.csv, input_hash cf2344519aad771a)"
+  },
+  "discriminant_validity": {
+    "target": "manufacturing_value_added_pct_gdp (NV.IND.MANF.ZS)",
+    "pooled_ols_beta": 0.049,
+    "pooled_ols_p": 0.7464,
+    "within_fe_beta": -0.074,
+    "within_fe_p": 0.7461,
+    "n": 523,
+    "n_countries": 44,
+    "_note": "판별타당도 placebo — 혁신과 무관한 외부 outcome(제조업 부가가치 %GDP)에 sci_literacy 가 pooled(β=+0.049, p=0.75)·within(β=−0.074, p=0.75) 모두 비유의(n.s.). 과학문화 신호가 혁신 산출에 특이적이며 일반 경제지표로 확산되지 않음을 입증.",
+    "_source": "gii_output_experiment.py (동결 데이터, n=523·44국)"
+  },
+  "culture_pred_edge": {
+    "patent_target": 0.337,
+    "article_target": 0.09,
+    "gii_input_subindex": 0.173,
+    "gii_output_subindex": -0.031,
+    "gii_combined": 0.049,
+    "_note": "문화 피처(만)의 R&D투입(만) 대비 예측 한계기여 차(SHAP). 비합성 직접 산출 타깃에서 양(+, 특허 +0.337·논문 +0.090), GII 산출 서브지수에서는 거의 0(−0.031)으로 투입과 비등. 직접산출에서만 문화 예측 우위가 나타나고 GII 산출 서브지수에서는 비등이라는 §4.8 단서의 동결 출처.",
+    "_source": "gii_output_experiment.py·decircle_experiment.py 로그"
+  },
+  "robustness_shap_allocation_anchor_rho": {
+    "shap_block_correlation": {
+      "patent_ratio": 1.5,
+      "patent_cog": 0.3335,
+      "patent_att": 0.2222,
+      "article_ratio": 34.28,
+      "article_cog": 0.2923,
+      "article_att": 0.0085,
+      "_note": "SHAP 상관-배분 강건성: 인지축 5피처·태도축 2피처를 각 단일 복합지수로 묶어 Shapley 상관-배분 임의성을 제거한 뒤 인지/태도 SHAP 비율 재산출. 특허 1.50x·논문 34.3x — 단일 복합에서도 인지 우세 유지. 단 특허에서 다피처 기준 3.3x→1.5x 감소는 상관-피처 배분이 인지 우세 배율을 부분 부풀렸음을 시사(논문은 태도복합≈0이라 오히려 상승). 인지>태도 방향은 배분 인공물이 아니나 강도는 단일 복합 기준으로 해석."
+    },
+    "within_anchor_only": {
+      "patent_beta_std": 0.1435,
+      "patent_p": 0.0542,
+      "n": 126,
+      "n_countries": 44,
+      "_note": "특허 within 을 PISA 실측 앵커연도(2012·2015·2018·2022)만으로 국가 FE 재추정. β=+0.144(p=0.054, 경계유의) — 전체(보간 포함) +0.238(p=0.0006)보다 약화. 보간이 within 강도를 부풀렸으나 앵커전용에서도 양(+)·경계유의라 순수 보간 인공물은 아님. within 을 보조 증거로 더 강하게 강등하는 근거."
+    },
+    "mediation_rho_sensitivity": {
+      "patent_a": 0.304,
+      "patent_b": -0.1419,
+      "patent_acme": -0.0432,
+      "patent_rho_star": -0.11,
+      "article_a": 0.2903,
+      "article_b": 0.4007,
+      "article_acme": 0.1163,
+      "article_rho_star": 0.3408,
+      "_note": "Imai-Tingley LSEM 근사 ρ*(=b·σ_εM/σ_εY, ACME=0 임계 매개변수-결과 잔차상관). 특허 ρ*=−0.11(작은 미관측 교란에 부호 전환·불안정), 논문 ρ*=+0.34(중간 강건). 동결·confounder-only 통제 사양에서 특허 b path 가 음(−)으로 사양 민감 — 매개를 인과 경로가 아닌 탐색적 분해로 한정하는 근거를 강화."
+    },
+    "_source": "robustness_shap_allocation_anchor_rho.py (동결 processed_dataset.csv, seed 42, input_hash cf2344519aad771a)"
+  },
+  "robustness_fdr_mediation_region": {
+    "fdr_within": {
+      "patent_p_adj": 0.0018,
+      "gii_output_p_adj": 0.1192,
+      "gii_composite_p_adj": 0.0782,
+      "patent_only_survives": true,
+      "_note": "within 3타깃 Benjamini–Hochberg 보정. 특허 within(p_adj 0.0018)만 FDR<0.05 생존, GII산출(0.119)·GII종합(0.078) n.s. — 다중검정 후에도 특허 단일 양성이 유지되나 within 은 1차 증거가 아닌 보조."
+    },
+    "fdr_cross": {
+      "patent_p_adj": 0.0004,
+      "article_p_adj": 0.0003,
+      "gii_output_p_adj": 0.001,
+      "all_survive": true,
+      "_note": "1차 횡단 3타깃 BH 보정 전부 FDR<0.05 — 1차 결과는 다중검정에 견고."
+    },
+    "mediation_ci": {
+      "patent_pct": -13.9,
+      "patent_ci": [
+        -61.6,
+        36.0
+      ],
+      "patent_includes_zero": true,
+      "article_pct": 21.0,
+      "article_ci": [
+        5.9,
+        44.4
+      ],
+      "article_includes_zero": false,
+      "_note": "직접산출 매개비율 국가 클러스터 부트스트랩(2000회, 동결 confounder-only 사양). 특허 매개는 −13.9%·CI[−61.6,36.0]로 0 포함·부호 음수 = 매우 불안정(robustness_shap_allocation_anchor_rho ρ*−0.11과 정합), 논문만 +21.0%·CI[5.9,44.4] 유의. decircle.mediation_patent_pct 28%는 WB-live mediator-included 사양이며 동결에서 재현되지 않음 — 매개를 헤드라인에서 강등하고 특허 매개는 탐색적·불안정으로 명시."
+    },
+    "leave_region": {
+      "full": 0.4098,
+      "europe_excl": 0.7205,
+      "asia_excl": 0.3549,
+      "americas_excl": 0.3228,
+      "oceania_excl": 0.3967,
+      "range": [
+        0.3228,
+        0.7205
+      ],
+      "all_positive_sig": true,
+      "_note": "특허 횡단 β 대륙(Europe·Asia·Americas·Oceania) 제외 재추정. 부호·유의성은 전부 견고(양·p<0.05)하나 크기는 0.32~0.72로 표본 구성 민감(Europe 28국 제외 시 0.72로 배증) — 외적 타당도가 표본 구성에 의존함을 시사."
+    },
+    "between_only": {
+      "patent_beta": 0.3928,
+      "patent_p": 0.0015,
+      "article_beta": 0.585,
+      "_note": "국가 평균 기반 순수 between 회귀. 특허 +0.393(pooled +0.410과 거의 동일)·논문 +0.585로, 횡단 연관이 패널 구조가 아니라 순수 국가 간 차이에서 식별됨을 확인(within 차원은 거의 장식적)."
+    },
+    "effective_sample": {
+      "nominal_obs": 528,
+      "effective_countries": 44,
+      "pisa_anchor_pct": 31,
+      "attitude_anchor_pct": 6.2,
+      "patent_n": 427,
+      "article_n": 473,
+      "sci_trust_n": 384,
+      "_note": "명목 528은 44국 저빈도 보간 패널의 명목치. PISA 앵커 31%·태도 6.2%, 직접산출 타깃 n 특허 427·논문 473."
+    },
+    "_source": "robustness_fdr_mediation_region.py (동결 processed_dataset.csv, seed 42, input_hash cf2344519aad771a)"
+  },
+  "external_reference_tfp": {
+    "tfp_pwt": {
+      "ctfp_cross_beta": 0.1268,
+      "ctfp_p": 0.2875,
+      "ctfp_oster_delta": 0.393,
+      "rtfpna_cross_beta": -0.3575,
+      "rtfpna_p": 0.0128,
+      "ctfp_within_p": 0.9647,
+      "rtfpna_within_p": 0.1563,
+      "shap_cog_pct": 14.78,
+      "shap_att_pct": 0.0,
+      "_note": "GII 완전독립 외부준거(Penn World Table 11.0 TFP, Feenstra·Inklaar·Timmer 2015 AER, CC BY 4.0, 44국×12년 528 완전커버). 인지 인적자본–TFP 연관 미검출 — TFP 수준 ctfp β+0.13·p=0.29 n.s.(Oster δ<1), TFP 성장 rtfpna β−0.36·p=0.013(음의 수렴: 고생산성국 성장 둔화). within 미검출. SHAP 인지축 14.8% vs 태도 0%로 정체는 유지. 결론: 연관은 공식 과기산출에 특이적, 먼 거시 경제결과로는 확장 안 됨(결과 범위 한정·분별타당도를 GII 가족 밖에서 외부 입증)."
+    },
+    "triadic_oecd": {
+      "cross_beta": 0.1888,
+      "p": 0.0003,
+      "oster_delta": 1.996,
+      "n": 484,
+      "n_countries": 44,
+      "_note": "GII-PCT와 측정·출처 분리된 특허 질 외부준거(OECD 삼극특허 패밀리, EPO+JPO+USPTO 동시·INVENTOR·PRIORITY·Patent Families·Total). per-capita 횡단 β+0.189·p=0.0003·Oster δ=1.996>1 → 연관 생존·견고(GII pooled δ2.43와 직접산출 특허 δ1.53 사이). 단 GII 5.2.5(patent families ≥2 offices)와 개념계열 동일이라 완전독립은 TFP뿐. 한국 sanity 2012=2493.6·2019=3337.5(분수카운트, PWT 정찰과 일치)."
+    },
+    "_source": "external_reference_tfp.py (PWT 11.0 + OECD 삼극 SDMX 동결 스냅샷: external_tfp_pwt110.csv·external_triadic_oecd.csv)"
+  }
+}

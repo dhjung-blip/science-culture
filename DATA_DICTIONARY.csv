@@ -1,0 +1,65 @@
+column,ecab_or_category,description,source,role_in_analysis,observed_cells_pre_interpolation,observed_share_pre_interpolation,legacy_placeholder_cells,non_null_cells_analysis_file,provenance_note
+country,Identifier,ISO 3166-1 alpha-3 country code,—,Panel key,528,100.00%,0,528,
+year,Identifier,"Calendar year, 2012–2023",—,Panel key,528,100.00%,0,528,
+sci_literacy,Cognition,"PISA science literacy, mean national score",OECD PISA,Treatment variable,162,30.68%,0,528,
+sci_trust,Attitude,"Confidence in science, national share (WVS)",World Values Survey W6/W7,Predictor — construct diagnostic only,33,6.25%,108,384,108 of the non-null cells are legacy placeholder values in 9 countries; see note P1
+tech_acceptance,Attitude,"Technology optimism, national share (WVS)",World Values Survey W6/W7,Predictor — construct diagnostic only,33,6.25%,108,384,108 of the non-null cells are legacy placeholder values in 9 countries; see note P1
+relative_salary,Reward level,Professional wage ratio relative to the national mean,ILOSTAT,Predictor,463,87.69%,0,516,Full 12-year coverage in 14 of the 18 legacy countries could not be separated into source-derived and placeholder cells from the released files; see note P3
+rd_budget_per_researcher,Reward level,"R&D resources per researcher, derived from R&D/GDP, GDP and researcher density",Derived in preprocessor.py,Predictor,440,83.33%,0,492,Full 12-year coverage in 14 of the 18 legacy countries could not be separated into source-derived and placeholder cells from the released files; see note P3
+innovation_score,Outcome,Global Innovation Index composite score (0–100),WIPO GII,Contamination-bearing benchmark outcome,528,100.00%,0,528,
+rd_gdp_pct,Physical scale,Gross domestic R&D expenditure as a share of GDP (%),World Bank Open Data (WDI),Control (confounder),496,93.94%,0,528,
+researchers_per_m,Physical scale,Researchers in R&D per million population,World Bank Open Data (WDI),Mediator — excluded from primary control set,440,83.33%,0,492,
+patent_apps,Physical scale,"Patent applications, residents",World Bank Open Data (WDI),Predictor and outcome numerator,427,80.87%,0,528,
+journal_articles,Physical scale,Scientific and technical journal articles,World Bank Open Data (WDI),Predictor and outcome numerator,473,89.58%,0,516,
+gdp_per_capita,Physical scale,"GDP per capita, current US$",World Bank Open Data (WDI),Control (confounder),528,100.00%,0,528,
+gov_edu_exp_pct,Operational structure,Government expenditure on education as a share of GDP (%),World Bank Open Data (WDI),Predictor,451,85.42%,0,528,
+internet_users_pct,Operational structure,Individuals using the internet (% of population),World Bank Open Data (WDI),Predictor,528,100.00%,0,528,
+hi_tech_export_pct,Reward level,High-technology exports as a share of manufactured exports (%),World Bank Open Data (WDI),Predictor,526,99.62%,0,528,
+tertiary_enroll,Cognition,Gross tertiary enrolment ratio (%),World Bank Open Data (WDI),Predictor,490,92.80%,0,528,
+mobile_subs_per100,Operational structure,Mobile cellular subscriptions per 100 people,World Bank Open Data (WDI),Predictor,528,100.00%,0,528,
+secure_servers_per_m,Operational structure,Secure internet servers per million people,World Bank Open Data (WDI),Predictor,528,100.00%,0,528,
+youth_unemp_pct,Reward level,Youth unemployment rate (%),World Bank Open Data (WDI),Predictor,528,100.00%,0,528,
+tertiary_attainment,Cognition,Population 25+ with a bachelor's degree or higher (%),World Bank Open Data (WDI),Predictor,381,72.16%,0,504,
+population,Physical scale,Total population,World Bank Open Data (WDI),Denominator for per-capita outcomes,528,100.00%,0,528,
+articles_per_m_log,Outcome,log1p of journal articles per million population,Derived in preprocessor.py,Primary de-circularized outcome,473,89.58%,0,473,
+patents_per_m_log,Outcome,log1p of patent applications per million population,Derived in preprocessor.py,Primary de-circularized outcome,427,80.87%,0,427,
+pisa_math,Cognition,"PISA mathematics, mean national score",OECD PISA,Predictor,163,30.87%,0,528,
+pisa_reading,Cognition,"PISA reading, mean national score",OECD PISA,Predictor,162,30.68%,0,528,
+country_name,Identifier,Country or economy name,—,Panel key,528,100.00%,0,528,
+sci_literacy_lag3,Lag feature,3-year within-country lag of sci_literacy,OECD PISA,Predictor (lag-3 only survived missingness pruning),162,30.68%,0,396,
+sci_literacy_lag5,Lag feature,5-year within-country lag of sci_literacy,OECD PISA,Generated but pruned from the final feature set,162,30.68%,0,308,
+sci_literacy_lag7,Lag feature,7-year within-country lag of sci_literacy,OECD PISA,Generated but pruned from the final feature set,162,30.68%,0,220,
+sci_trust_lag3,Lag feature,3-year within-country lag of sci_trust,World Values Survey W6/W7,Predictor (lag-3 only survived missingness pruning),33,6.25%,108,288,108 of the non-null cells are legacy placeholder values in 9 countries; see note P1
+sci_trust_lag5,Lag feature,5-year within-country lag of sci_trust,World Values Survey W6/W7,Generated but pruned from the final feature set,33,6.25%,108,224,108 of the non-null cells are legacy placeholder values in 9 countries; see note P1
+sci_trust_lag7,Lag feature,7-year within-country lag of sci_trust,World Values Survey W6/W7,Generated but pruned from the final feature set,33,6.25%,108,160,108 of the non-null cells are legacy placeholder values in 9 countries; see note P1
+tech_acceptance_lag3,Lag feature,3-year within-country lag of tech_acceptance,World Values Survey W6/W7,Predictor (lag-3 only survived missingness pruning),33,6.25%,108,288,108 of the non-null cells are legacy placeholder values in 9 countries; see note P1
+tech_acceptance_lag5,Lag feature,5-year within-country lag of tech_acceptance,World Values Survey W6/W7,Generated but pruned from the final feature set,33,6.25%,108,224,108 of the non-null cells are legacy placeholder values in 9 countries; see note P1
+tech_acceptance_lag7,Lag feature,7-year within-country lag of tech_acceptance,World Values Survey W6/W7,Generated but pruned from the final feature set,33,6.25%,108,160,108 of the non-null cells are legacy placeholder values in 9 countries; see note P1
+pisa_math_lag3,Lag feature,3-year within-country lag of pisa_math,OECD PISA,Predictor (lag-3 only survived missingness pruning),163,30.87%,0,396,
+pisa_math_lag5,Lag feature,5-year within-country lag of pisa_math,OECD PISA,Generated but pruned from the final feature set,163,30.87%,0,308,
+pisa_math_lag7,Lag feature,7-year within-country lag of pisa_math,OECD PISA,Generated but pruned from the final feature set,163,30.87%,0,220,
+pisa_reading_lag3,Lag feature,3-year within-country lag of pisa_reading,OECD PISA,Predictor (lag-3 only survived missingness pruning),162,30.68%,0,396,
+pisa_reading_lag5,Lag feature,5-year within-country lag of pisa_reading,OECD PISA,Generated but pruned from the final feature set,162,30.68%,0,308,
+pisa_reading_lag7,Lag feature,7-year within-country lag of pisa_reading,OECD PISA,Generated but pruned from the final feature set,162,30.68%,0,220,
+tertiary_enroll_lag3,Lag feature,3-year within-country lag of tertiary_enroll,World Bank Open Data (WDI),Predictor (lag-3 only survived missingness pruning),490,92.80%,0,396,
+tertiary_enroll_lag5,Lag feature,5-year within-country lag of tertiary_enroll,World Bank Open Data (WDI),Generated but pruned from the final feature set,490,92.80%,0,308,
+tertiary_enroll_lag7,Lag feature,7-year within-country lag of tertiary_enroll,World Bank Open Data (WDI),Generated but pruned from the final feature set,490,92.80%,0,220,
+tertiary_attainment_lag3,Lag feature,3-year within-country lag of tertiary_attainment,World Bank Open Data (WDI),Predictor (lag-3 only survived missingness pruning),381,72.16%,0,378,
+tertiary_attainment_lag5,Lag feature,5-year within-country lag of tertiary_attainment,World Bank Open Data (WDI),Generated but pruned from the final feature set,381,72.16%,0,294,
+tertiary_attainment_lag7,Lag feature,7-year within-country lag of tertiary_attainment,World Bank Open Data (WDI),Generated but pruned from the final feature set,381,72.16%,0,210,
+hi_tech_export_pct_lag3,Lag feature,3-year within-country lag of hi_tech_export_pct,World Bank Open Data (WDI),Predictor (lag-3 only survived missingness pruning),526,99.62%,0,396,
+hi_tech_export_pct_lag5,Lag feature,5-year within-country lag of hi_tech_export_pct,World Bank Open Data (WDI),Generated but pruned from the final feature set,526,99.62%,0,308,
+hi_tech_export_pct_lag7,Lag feature,7-year within-country lag of hi_tech_export_pct,World Bank Open Data (WDI),Generated but pruned from the final feature set,526,99.62%,0,220,
+rd_budget_per_researcher_lag3,Lag feature,3-year within-country lag of rd_budget_per_researcher,Derived in preprocessor.py,Predictor (lag-3 only survived missingness pruning),440,83.33%,0,369,Full 12-year coverage in 14 of the 18 legacy countries could not be separated into source-derived and placeholder cells from the released files; see note P3
+rd_budget_per_researcher_lag5,Lag feature,5-year within-country lag of rd_budget_per_researcher,Derived in preprocessor.py,Generated but pruned from the final feature set,440,83.33%,0,287,Full 12-year coverage in 14 of the 18 legacy countries could not be separated into source-derived and placeholder cells from the released files; see note P3
+rd_budget_per_researcher_lag7,Lag feature,7-year within-country lag of rd_budget_per_researcher,Derived in preprocessor.py,Generated but pruned from the final feature set,440,83.33%,0,205,Full 12-year coverage in 14 of the 18 legacy countries could not be separated into source-derived and placeholder cells from the released files; see note P3
+relative_salary_lag3,Lag feature,3-year within-country lag of relative_salary,ILOSTAT,Predictor (lag-3 only survived missingness pruning),463,87.69%,0,387,Full 12-year coverage in 14 of the 18 legacy countries could not be separated into source-derived and placeholder cells from the released files; see note P3
+relative_salary_lag5,Lag feature,5-year within-country lag of relative_salary,ILOSTAT,Generated but pruned from the final feature set,463,87.69%,0,301,Full 12-year coverage in 14 of the 18 legacy countries could not be separated into source-derived and placeholder cells from the released files; see note P3
+relative_salary_lag7,Lag feature,7-year within-country lag of relative_salary,ILOSTAT,Generated but pruned from the final feature set,463,87.69%,0,215,Full 12-year coverage in 14 of the 18 legacy countries could not be separated into source-derived and placeholder cells from the released files; see note P3
+youth_unemp_pct_lag3,Lag feature,3-year within-country lag of youth_unemp_pct,World Bank Open Data (WDI),Predictor (lag-3 only survived missingness pruning),528,100.00%,0,396,
+youth_unemp_pct_lag5,Lag feature,5-year within-country lag of youth_unemp_pct,World Bank Open Data (WDI),Generated but pruned from the final feature set,528,100.00%,0,308,
+youth_unemp_pct_lag7,Lag feature,7-year within-country lag of youth_unemp_pct,World Bank Open Data (WDI),Generated but pruned from the final feature set,528,100.00%,0,220,
+idx_sci_culture,Composite,Unweighted mean of min–max rescaled science-culture features (7),Derived in preprocessor.py,SHAP category accounting only,n/a,n/a,0,528,
+idx_hard_rd,Composite,Unweighted mean of min–max rescaled physical-scale features (5),Derived in preprocessor.py,SHAP category accounting only,n/a,n/a,0,528,
+idx_structure,Composite,Unweighted mean of min–max rescaled operational-structure features (4),Derived in preprocessor.py,SHAP category accounting only,n/a,n/a,0,528,
+idx_economic,Composite,Unweighted mean of min–max rescaled reward-level features (4),Derived in preprocessor.py,SHAP category accounting only,n/a,n/a,0,528,

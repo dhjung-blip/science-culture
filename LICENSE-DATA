@@ -1,0 +1,19 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+The derived data files produced by this project — analysis/canonical/raw_dataset.csv,
+analysis/canonical/processed_dataset.csv, the files under data/external/, and the frozen
+result files under results/ — are released under CC BY 4.0.
+Full text: https://creativecommons.org/licenses/by/4.0/legalcode
+
+This licence applies to the derived files only. Upstream sources retain their own terms:
+
+  World Bank Open Data ................ CC BY 4.0
+  OECD PISA, OECD triadic patents ..... OECD terms of use
+  WIPO GII, WIPO PCT .................. WIPO terms of use
+  OpenAlex ............................ CC0
+  ILOSTAT ............................. ILO terms of use
+  Penn World Table 11.0 ............... CC BY 4.0
+  World Values Survey ................. WVS access terms; microdata are NOT redistributed
+                                        here, only derived national aggregates
+
+Source code in this package is licensed separately under the MIT License; see LICENSE.

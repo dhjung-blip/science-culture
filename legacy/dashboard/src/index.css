@@ -1,0 +1,234 @@
+/* ============================================================
+   과학문화 × 국가혁신 — XAI 대시보드
+   Design tokens · dark/light theme · projector-optimized
+   (Pretendard 폰트는 index.html 의 <link> 로 로드)
+   ============================================================ */
+
+:root {
+  /* ---- Surfaces (deep navy, not pure black) ---- */
+  --bg:          #080d18;
+  --bg-grad-1:   #0b1322;
+  --bg-grad-2:   #070b14;
+  --surface:     #111a2c;
+  --surface-2:   #16223a;
+  --surface-3:   #1d2c47;
+  --inset:       #0a1120;
+
+  /* ---- Lines ---- */
+  --line:        rgba(255,255,255,0.07);
+  --line-strong: rgba(255,255,255,0.14);
+  --line-accent: rgba(94,148,255,0.30);
+
+  /* ---- Text ---- */
+  --text:        #f3f6fc;
+  --text-soft:   #c2cde0;
+  --text-muted:  #8493ac;
+  --text-dim:    #5b6a85;
+
+  /* ---- Category colors (fixed semantic) ---- */
+  --c-reward:    #ff9b3d;   /* 보상수준 — 주황 */
+  --c-reward-d:  #c2691b;
+  --c-physical:  #2fd39a;   /* 물적규모 — 초록 */
+  --c-physical-d:#1c8f68;
+  --c-culture:   #5e94ff;   /* 과학문화 — 파랑 (MAIN BRAND) */
+  --c-culture-d: #3a63c4;
+  --c-ops:       #b388ff;   /* 운영구조 — 보라 */
+  --c-ops-d:     #7c54d6;
+
+  /* ---- Diverging (tornado / delta) ---- */
+  --pos:         #2fd39a;   /* 강점 */
+  --pos-soft:    rgba(47,211,154,0.16);
+  --neg:         #ff6b6b;   /* 병목 */
+  --neg-soft:    rgba(255,107,107,0.16);
+
+  /* ---- Brand accent (= 과학문화) ---- */
+  --accent:      #5e94ff;
+  --accent-bright:#7eaaff;
+  --accent-glow: rgba(94,148,255,0.45);
+
+  /* ---- Radii ---- */
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-xl: 26px;
+
+  /* ---- Shadow ---- */
+  --shadow-card: 0 1px 0 rgba(255,255,255,0.04) inset, 0 18px 40px -24px rgba(0,0,0,0.8);
+  --shadow-pop:  0 24px 60px -20px rgba(0,0,0,0.85);
+
+  /* ---- Type scale (large, 3m readability) ---- */
+  --font: "Pretendard", "Pretendard Variable", -apple-system, system-ui, sans-serif;
+  --num:  "Pretendard", system-ui, sans-serif;
+}
+
+/* ============================================================
+   LIGHT THEME OVERRIDES
+   ============================================================ */
+:root[data-theme="light"] {
+  --bg:          #e9eef6;
+  --bg-grad-1:   #f3f6fb;
+  --bg-grad-2:   #e6ecf5;
+  --surface:     #ffffff;
+  --surface-2:   #f7f9fc;
+  --surface-3:   #eaf0f8;
+  --inset:       #eef2f8;
+
+  --line:        rgba(20,40,80,0.10);
+  --line-strong: rgba(20,40,80,0.20);
+  --line-accent: rgba(47,99,214,0.38);
+
+  --text:        #101a30;
+  --text-soft:   #2c3a55;
+  --text-muted:  #5c6a84;
+  --text-dim:    #8694ac;
+
+  --c-reward:    #df7a16;
+  --c-reward-d:  #b65f0d;
+  --c-physical:  #11936a;
+  --c-physical-d:#0c7050;
+  --c-culture:   #2f63d6;
+  --c-culture-d: #234da8;
+  --c-ops:       #7a4fd0;
+  --c-ops-d:     #5e3aa8;
+
+  --pos:         #11936a;
+  --pos-soft:    rgba(17,147,106,0.12);
+  --neg:         #d6434a;
+  --neg-soft:    rgba(214,67,74,0.12);
+
+  --accent:      #2f63d6;
+  --accent-bright:#234da8;
+  --accent-glow: rgba(47,99,214,0.28);
+
+  --shadow-card: 0 1px 0 rgba(255,255,255,0.7) inset, 0 12px 30px -20px rgba(20,40,80,0.30);
+  --shadow-pop:  0 24px 60px -22px rgba(20,40,80,0.35);
+}
+
+:root[data-theme="light"] body {
+  background:
+    radial-gradient(1100px 640px at 80% -12%, rgba(47,99,214,0.10), transparent 60%),
+    radial-gradient(820px 540px at 8% 112%, rgba(122,79,208,0.07), transparent 55%),
+    linear-gradient(160deg, var(--bg-grad-1), var(--bg-grad-2));
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  background:
+    radial-gradient(1200px 700px at 78% -10%, rgba(94,148,255,0.10), transparent 60%),
+    radial-gradient(900px 600px at 10% 110%, rgba(179,136,255,0.07), transparent 55%),
+    linear-gradient(160deg, var(--bg-grad-1), var(--bg-grad-2));
+  background-attachment: fixed;
+  color: var(--text);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+#root { min-height: 100%; }
+
+/* numbers want tabular + tight tracking */
+.num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "ss01" 1;
+  letter-spacing: -0.02em;
+}
+
+::selection { background: var(--accent-glow); color: #fff; }
+
+/* scrollbar */
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 20px; border: 2px solid transparent; background-clip: content-box; }
+*::-webkit-scrollbar-track { background: transparent; }
+
+/* ---- utility ---- */
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-dim);
+}
+
+@keyframes barGrow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes fadeUp  { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes popIn   { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: none; } }
+@keyframes drawLine { from { stroke-dashoffset: var(--len); } to { stroke-dashoffset: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* ============================================================
+   RESPONSIVE — 좁은 화면 (모바일·태블릿 세로)
+   ============================================================ */
+@media (max-width: 720px) {
+  .wrap {
+    padding: 18px 14px 28px !important;
+    gap: 16px !important;
+  }
+  .app-header {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 14px !important;
+  }
+  .header-controls {
+    justify-content: flex-start !important;
+  }
+  /* KPI 1열 */
+  .kpi-row {
+    grid-template-columns: 1fr !important;
+  }
+  /* 각 Tab 의 다중 컬럼 grid 를 1열로 */
+  .tab-grid-2col {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  /* 매개분석 도식: X — M — Y 가 너무 좁아지면 세로 stack */
+  .mediation-row {
+    grid-template-columns: 1fr !important;
+  }
+  .app-footer {
+    flex-direction: column !important;
+    gap: 6px !important;
+  }
+}
+
+/* ============================================================
+   PRINT — 발표 자료용 (다크 배경/장식 제거, 카드 페이지 단위 보존)
+   ============================================================ */
+@media print {
+  html, body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  .wrap {
+    max-width: none !important;
+    padding: 0 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  /* 차트/카드는 페이지 경계에서 깨지지 않도록 */
+  section,
+  [class*="card"],
+  [class*="Card"] {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    box-shadow: none !important;
+  }
+  /* 어두운 표면 색을 인쇄 시 흰색으로 */
+  :root {
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --surface-2: #ffffff;
+    --surface-3: #f4f6fa;
+    --inset: #f7f9fc;
+    --text: #101a30;
+    --text-soft: #2c3a55;
+    --text-muted: #4a5874;
+    --text-dim: #6a7892;
+    --line: rgba(20,40,80,0.18);
+  }
+}

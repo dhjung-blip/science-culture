@@ -1,0 +1,270 @@
+{
+  "generated_at": "2026-06-26T10:07:27.828924",
+  "model_performance": {
+    "rmse": 4.0824,
+    "rmse_std": 0.5829,
+    "mae": 3.4114,
+    "mae_std": 0.5187,
+    "r2": 0.7704,
+    "r2_std": 0.0899,
+    "train_r2": 0.993,
+    "overfit_gap": 0.2225,
+    "n_features": 32,
+    "feature_names": [
+      "sci_literacy",
+      "sci_trust",
+      "tech_acceptance",
+      "pisa_math",
+      "pisa_reading",
+      "tertiary_enroll",
+      "tertiary_attainment",
+      "rd_gdp_pct",
+      "researchers_per_m",
+      "patent_apps",
+      "journal_articles",
+      "gdp_per_capita",
+      "gov_edu_exp_pct",
+      "internet_users_pct",
+      "mobile_subs_per100",
+      "secure_servers_per_m",
+      "hi_tech_export_pct",
+      "rd_budget_per_researcher",
+      "relative_salary",
+      "youth_unemp_pct",
+      "idx_sci_culture",
+      "idx_hard_rd",
+      "idx_structure",
+      "idx_economic",
+      "sci_literacy_lag3",
+      "pisa_math_lag3",
+      "pisa_reading_lag3",
+      "tertiary_enroll_lag3",
+      "tertiary_attainment_lag3",
+      "hi_tech_export_pct_lag3",
+      "relative_salary_lag3",
+      "youth_unemp_pct_lag3"
+    ],
+    "n_samples": 528,
+    "params_used": {
+      "n_estimators": 300,
+      "max_depth": 4,
+      "learning_rate": 0.05,
+      "subsample": 0.7,
+      "colsample_bytree": 0.6,
+      "min_child_weight": 5,
+      "reg_alpha": 1.0,
+      "reg_lambda": 3.0,
+      "gamma": 0.5,
+      "random_state": 42,
+      "n_jobs": -1,
+      "verbosity": 0
+    },
+    "input_hash": "cf2344519aad771a",
+    "random_state": 42
+  },
+  "category_contribution": [
+    {
+      "category": "물적규모",
+      "weight_pct": 53.029998779296875
+    },
+    {
+      "category": "과학문화",
+      "weight_pct": 27.420000076293945
+    },
+    {
+      "category": "보상수준",
+      "weight_pct": 12.65999984741211
+    },
+    {
+      "category": "운영구조",
+      "weight_pct": 6.900000095367432
+    }
+  ],
+  "top10_features": [
+    {
+      "rank": 1,
+      "feature": "gdp_per_capita",
+      "importance_pct": 25.75,
+      "category": "물적규모"
+    },
+    {
+      "rank": 2,
+      "feature": "idx_hard_rd",
+      "importance_pct": 16.8700008392334,
+      "category": "물적규모"
+    },
+    {
+      "rank": 3,
+      "feature": "pisa_reading",
+      "importance_pct": 7.159999847412109,
+      "category": "과학문화"
+    },
+    {
+      "rank": 4,
+      "feature": "pisa_math",
+      "importance_pct": 6.289999961853027,
+      "category": "과학문화"
+    },
+    {
+      "rank": 5,
+      "feature": "sci_literacy",
+      "importance_pct": 3.7300000190734863,
+      "category": "과학문화"
+    },
+    {
+      "rank": 6,
+      "feature": "researchers_per_m",
+      "importance_pct": 3.319999933242798,
+      "category": "물적규모"
+    },
+    {
+      "rank": 7,
+      "feature": "patent_apps",
+      "importance_pct": 2.7899999618530273,
+      "category": "물적규모"
+    },
+    {
+      "rank": 8,
+      "feature": "rd_gdp_pct",
+      "importance_pct": 2.7799999713897705,
+      "category": "물적규모"
+    },
+    {
+      "rank": 9,
+      "feature": "mobile_subs_per100",
+      "importance_pct": 2.7300000190734863,
+      "category": "운영구조"
+    },
+    {
+      "rank": 10,
+      "feature": "rd_budget_per_researcher",
+      "importance_pct": 2.5899999141693115,
+      "category": "보상수준"
+    }
+  ],
+  "korea_bottlenecks": [
+    {
+      "feature": "gdp_per_capita",
+      "shap_value": 2.192699909210205,
+      "category": "물적규모",
+      "direction": "▲ 기여"
+    },
+    {
+      "feature": "idx_hard_rd",
+      "shap_value": 2.1029000282287598,
+      "category": "물적규모",
+      "direction": "▲ 기여"
+    },
+    {
+      "feature": "pisa_math",
+      "shap_value": 0.9028000235557556,
+      "category": "과학문화",
+      "direction": "▲ 기여"
+    },
+    {
+      "feature": "pisa_reading",
+      "shap_value": 0.7448999881744385,
+      "category": "과학문화",
+      "direction": "▲ 기여"
+    },
+    {
+      "feature": "rd_gdp_pct",
+      "shap_value": 0.6769000291824341,
+      "category": "물적규모",
+      "direction": "▲ 기여"
+    },
+    {
+      "feature": "mobile_subs_per100",
+      "shap_value": 0.5692999958992004,
+      "category": "운영구조",
+      "direction": "▲ 기여"
+    },
+    {
+      "feature": "sci_literacy",
+      "shap_value": 0.5616999864578247,
+      "category": "과학문화",
+      "direction": "▲ 기여"
+    },
+    {
+      "feature": "researchers_per_m",
+      "shap_value": 0.5582000017166138,
+      "category": "물적규모",
+      "direction": "▲ 기여"
+    },
+    {
+      "feature": "hi_tech_export_pct",
+      "shap_value": 0.3668000102043152,
+      "category": "보상수준",
+      "direction": "▲ 기여"
+    },
+    {
+      "feature": "idx_structure",
+      "shap_value": 0.34950000047683716,
+      "category": "운영구조",
+      "direction": "▲ 기여"
+    }
+  ],
+  "scenario_matrix": {
+    "baseline": {
+      "KOR": 58.61,
+      "JPN": 54.34,
+      "USA": 61.61,
+      "DEU": 58.46,
+      "FIN": 60.2
+    },
+    "과학문화": {
+      "KOR": -0.11,
+      "JPN": 0.0,
+      "USA": 0.12,
+      "DEU": -0.05,
+      "FIN": -0.08
+    },
+    "물적규모": {
+      "KOR": 0.0,
+      "JPN": 0.13,
+      "USA": -0.14,
+      "DEU": 0.03,
+      "FIN": 2.68
+    },
+    "운영구조": {
+      "KOR": -0.01,
+      "JPN": -0.05,
+      "USA": -0.24,
+      "DEU": -0.07,
+      "FIN": -0.12
+    },
+    "보상수준": {
+      "KOR": 0.0,
+      "JPN": 0.16,
+      "USA": 0.04,
+      "DEU": 0.66,
+      "FIN": -0.08
+    }
+  },
+  "korea_gap_analysis": [
+    {
+      "reference": "FIN",
+      "kor_score": 58.6082,
+      "ref_score": 60.1953,
+      "gap": 1.5871,
+      "halfgap_bridge": 59.066,
+      "expected_gain": 0.4578
+    },
+    {
+      "reference": "USA",
+      "kor_score": 58.6082,
+      "ref_score": 61.6117,
+      "gap": 3.0035,
+      "halfgap_bridge": 60.9467,
+      "expected_gain": 2.3385
+    },
+    {
+      "reference": "DEU",
+      "kor_score": 58.6082,
+      "ref_score": 58.4631,
+      "gap": -0.1451,
+      "halfgap_bridge": 59.1949,
+      "expected_gain": 0.5867
+    }
+  ]
+}
